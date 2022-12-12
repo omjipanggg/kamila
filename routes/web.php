@@ -13,43 +13,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard', ['title' => 'Home']);
-});
+Auth::routes();
 
-Route::get('dashboard', function () {
-    return view('dashboard', ['title' => 'Home']);
-});
+Route::resource('applicant', App\Http\Controllers\ApplicantController::class);
 
-Route::get('employee', function () {
-    return view('dashboard', ['title' => 'Home']);
-});
-Route::get('applicant', function () {
-    return view('dashboard', ['title' => 'Home']);
-});
+Route::get('employee', [App\Http\Controllers\EmployeeController::class, 'index'])->name('employee');
+Route::get('employee/{employee}/on', [App\Http\Controllers\EmployeeController::class, 'on_duty'])->name('employee.on');
+Route::post('employee/{employee}/off', [App\Http\Controllers\EmployeeController::class, 'off_duty'])->name('employee.off');
 
-Route::get('vacancy', function () {
-    return view('dashboard', ['title' => 'Home']);
-});
-Route::get('login', function () {
-    return view('login', ['title' => 'Login']);
-});
+Route::resource('vacancy', App\Http\Controllers\ProposalController::class);
 
-Route::get('register', function () {
-    return view('register', ['title' => 'Register']);
-});
-Route::get('forgot', function () {
-    return view('forgot', ['title' => 'Forgot']);
-});
+Route::get('dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard')->middleware('check');
 
-Route::get('fzo', function () {
-    return view('401', ['title' => 'Unauthorized']);
-});
-Route::get('fzf', function () {
-    return view('404', ['title' => 'Not Found']);
-});
-Route::get('fhd', function () {
-    return view('500', ['title' => 'Invalid']);
-});
-
-
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');

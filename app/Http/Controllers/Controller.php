@@ -10,4 +10,17 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    protected $model, $action;
+
+    public function __construct($model = '', $action = '')
+    {
+    	$this->model = $model;
+    	$this->action = $action;
+    }
+
+   	public function getAllColumns($model)
+   	{
+   		return \Schema::getColumnListing($model->getTable());
+   	}
 }
