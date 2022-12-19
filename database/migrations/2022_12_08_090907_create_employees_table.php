@@ -44,6 +44,7 @@ class CreateEmployeesTable extends Migration
             $table->string('last_education')->nullable();
             $table->string('picture')->nullable();
             $table->string('marital_status')->nullable();
+            $table->foreignId('work_location_id')->cascadeOnUpdate()->nullable()->constrained();
             $table->timestamps();
         });
 
