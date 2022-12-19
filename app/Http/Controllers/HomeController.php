@@ -23,11 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.homepage.index', ['title' => 'Home']);
-    }
-
-    public function profile()
-    {
-        return view('pages.homepage.profile', ['title' => 'Profile']);
+        //
     }
 }

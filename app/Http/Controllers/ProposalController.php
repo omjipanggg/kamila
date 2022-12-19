@@ -12,14 +12,21 @@ class ProposalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+    }
+
     public function index()
     {
 
         $context = [
             'title' => 'Data Lamaran',
             'model' => new Proposal,
+            'menus' => \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get(),
             'records' => Proposal::all(),
-            'columns' => $this->getAllColumns(new Proposal),
+            'columns' => $this->getColNames(new Proposal),
+
         ];
         return view('pages.proposal.index', $context);
     }

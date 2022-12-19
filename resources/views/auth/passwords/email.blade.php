@@ -1,9 +1,9 @@
-@extends('layouts.app')
+@extends('layouts.core')
 
 @section('content')
-<div class="container">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-header">{{ __('Reset Password') }}</div>
 
@@ -17,23 +17,20 @@
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
-                        <div class="row mb-2">
+                        <div class="row">
                             <div class="col">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus="" placeholder="Email address">
+                                <div class="d-flex align-items-center justify-content-between gap-2">
+                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus="" placeholder="Email address" />
+                                    <button type="submit" class="btn btn-color">
+                                        {{ __('Send') }}
+                                    </button>
+                                </div>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col">
-                                <button type="submit" class="btn btn-color">
-                                    {{ __('Send') }}
-                                </button>
                             </div>
                         </div>
                     </form>

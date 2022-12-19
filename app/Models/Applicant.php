@@ -12,7 +12,6 @@ class Applicant extends Model
     protected $table = 'applicants';
 
     protected $fillable = [
-    	'id',
     	'id_number',
     	'name',
     	'birth_place',
@@ -28,17 +27,17 @@ class Applicant extends Model
     	'phone_number',
     	'email',
     	'username',
-    	'religion',
-    	'gender',
+    	'religion_id',
+    	'gender_id',
     	'blood_type',
     	'last_education',
-    	'password',
     	'picture',
     	'marital_status',
     	'ready_to_work',
     	'expected_salary',
     	'expected_facility',
     	'resume',
+        'status',
     ];
 
     protected $casts = [

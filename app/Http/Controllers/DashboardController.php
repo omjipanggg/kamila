@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth', 'check', 'verified']);
     }
     /**
      * Display a listing of the resource.
@@ -20,7 +20,9 @@ class DashboardController extends Controller
     {
         $context = [
             'title' => 'Dashboard',
-            'done' => \App\Models\Attendance::where('employee_id', '=', Auth::user()->id)->where('attendance_date', '=', today())->first(),
+            'menus' => \App\Models\Menu::where('role_id', '=', Auth::user()->role_id)->get(),
+            'schedules' => \App\Models\Attendance::all(),
+            'done' => \App\Models\UserAttendance::where('user_id', '=', Auth::user()->id)->where('attendance_date', '=', today())->first(),
         ];
         return view('pages.dashboard.index', $context);
     }
@@ -54,7 +56,6 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -90,4 +91,23 @@ class DashboardController extends Controller
     {
         //
     }
+
+    public function display($table)
+    {
+        $model = '\\App\\Models\\' . $table;
+        $context = [
+            'title' => ucfirst($table),
+            'model' => new $model,
+            'records' => $model::all(),
+            'columns' => $this->getColNames(new $model),
+            'colTypes' => $this->getColTypes(new $model)
+        ];
+        return view('pages.dashboard.show', $context);
+    }
+
+    public function storeBatch(Request $request, $table)
+    {
+
+    }
+
 }

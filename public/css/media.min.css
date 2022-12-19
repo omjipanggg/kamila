@@ -1,10 +1,19 @@
 /* TABLETS and lower */
-@media all and (max-width: 767.98px) {
+@media all and (max-width: 991.98px) {
+	.navbar-nav .dropdown-menu {
+		position: relative;
+		margin-bottom: .5rem;
+	}
 	.dropdown-menu[data-bs-popper] {
-		text-align: left;
 		left: 0;
 		right: unset;
+		text-align: left;
 	}
+	.camera-box {
+		padding-left: 12px;
+	}
+}
+@media all and (max-width: 767.98px) {
 }
 @media all and (max-width: 575.98px) {
     

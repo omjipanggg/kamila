@@ -10,4 +10,11 @@ class ActivityLog extends Model
     use HasFactory;
 
     protected $table = 'activity_logs';
+
+    protected $fillable = [
+    	'id',
+    	'user_id',
+    	'query',
+    	'affected_table',
+    ];
 }

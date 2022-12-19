@@ -10,14 +10,15 @@ class Proposal extends Model
     use HasFactory;
     
     protected $table = 'proposals';
-    protected $primaryKey = 'id';
-    public $incrementing = false;
 
     protected $fillable = [
         'id',
-    	'position',
+    	'department_id',
     	'qualification',
     	'description',
+    	'permalink',
+    	'phone_number',
+    	'vendor_id',
     	'published_by',
     ];
 }

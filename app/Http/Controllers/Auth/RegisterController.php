@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
-use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
@@ -65,15 +64,12 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'id' => Str::uuid()->toString(),
-            'name' => $data['name'],
+        return \App\Models\User::create([
+            'id' => substr(Str::uuid()->toString(), 0, 8),
+            'name' => ucwords($data['name']),
             'email' => $data['email'],
+            'role_id' => 'BASIC001',
             'password' => Hash::make($data['password']),
         ]);
-    }
-    public function showRegistrationForm()
-    {
-        return view('auth.register', ['title' => 'Register']);
     }
 }

@@ -1,10 +1,10 @@
 <div class="card">
 <div class="card-header">
-    <i class="fas fa-table me-1"></i>
+    <i class="fas fa-database me-2"></i>
     {{ $title }}
 </div>
 <div class="card-body">
-    <table id="fetchTable">
+    <table id="fetchTable" class="table">
         <thead>
             <tr> 
                 @foreach($columns as $data)
@@ -21,6 +21,13 @@
                 </tr>
             @endforeach
         </tbody>
+        <tfoot>
+            <tr> 
+                @foreach($columns as $data)
+                    <th>{{ $data }}</th>
+                @endforeach
+            </tr>
+        </tfoot>
     </table>
 </div>
 </div>

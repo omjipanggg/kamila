@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -40,15 +41,12 @@ class LoginController extends Controller
   
     protected function redirectTo()
     {
-        if (\Auth::check() && \Auth::user()->is_admin == 1) {
-            return 'dashboard';
-        } else {
-            RouteServiceProvider::HOME;
-        }
+        // if (\Auth::check() && \Auth::user()->role_id == 'ADMIN001') {
+        //     return 'dashboard';
+        // } else { RouteServiceProvider::HOME; }
+
+        RouteServiceProvider::HOME;
     }
-    
-    public function showLoginForm()
-    {
-        return view('auth.login', ['title' => 'Login']);
-    }
+
+
 }

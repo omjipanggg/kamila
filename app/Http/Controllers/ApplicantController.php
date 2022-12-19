@@ -12,13 +12,25 @@ class ApplicantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    } 
+
+    public function getMenu()
+    {
+        return \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get();
+    }
+
     public function index()
     {
         $context = [
             'title' => 'Data Pelamar',
+            'menus' => \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get(),
             'model' => new Applicant,
             'records' => Applicant::all(),
-            'columns' => $this->getAllColumns(new Applicant),
+            'columns' => $this->getColNames(new Applicant),
         ];
         return view('pages.applicant.index', $context);
     }
@@ -28,9 +40,25 @@ class ApplicantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(\Kris\LaravelFormBuilder\FormBuilder $fb)
     {
-        //
+        $form = $fb->create('\App\Forms\InsertForm', [
+            'method' => 'POST',
+            'url' => route('applicant.store'),
+            'data' => [
+                'gender_id' => \App\Models\Gender::pluck('name', 'id')->toArray(),
+                'religion_id' => \App\Models\Religion::pluck('name', 'id')->toArray(),
+                'blood_type_id' => \App\Models\BloodType::pluck('name', 'id')->toArray(),
+            ],
+            'model' => new \App\Models\Applicant,
+        ]);
+
+        $context = [
+            'title' => 'Applicant',
+            'form' => $form,
+            'menus' => $this->getMenu(),
+        ];
+        return view('pages.applicant.create', $context);
     }
 
     /**
@@ -41,7 +69,7 @@ class ApplicantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
@@ -84,6 +112,10 @@ class ApplicantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function testing($id) {}
+    public function scoring($id) {}
+    public function offering($id) {}
+
     public function destroy($id)
     {
         //

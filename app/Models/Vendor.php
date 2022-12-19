@@ -15,6 +15,11 @@ class Vendor extends Model
     	'id',
     	'name',
     	'address',
+        'phone_number',
     	'description',
+    ];
+
+    protected $casts = [
+        'id' => 'string',
     ];
 }

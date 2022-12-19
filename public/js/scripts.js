@@ -1,3 +1,9 @@
+const MAPBOX_TOKEN = 'pk.eyJ1IjoicG9oYW5nZ2ciLCJhIjoiY2xia2ptdGljMDB3MDNubXZqNnpsNW05ZSJ9.A3LoOKPSmbvKilqNx6qxvA';
+
+$(window).on('load', function() {       
+    $("#preloader").fadeOut();
+});
+
 function clock() {
     const month = [ "January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October",
@@ -15,16 +21,16 @@ function clock() {
         minutes = time.getMinutes(),
         seconds = time.getSeconds();
 
-    document.querySelector('#clock').innerHTML = theDate + ' ' + harold(hours) + ":" + harold(minutes) + ":" + harold(seconds);
+    document.body.querySelector('#clock').innerHTML = theDate + ' ' + harold(hours) + ":" + harold(minutes) + ":" + harold(seconds);
 }
 
-const setClock = document.querySelector('#clock');
+const setClock = document.body.querySelector('#clock');
 
 if (setClock) {
     setInterval(clock, 1000);
 }
 
-$(window).scroll(function() {
+$(window).on('scroll', function() {
     let currentScroll = $(this).scrollTop();
     let winHeight = $(this).height();
     let docHeight = $(document).height();
@@ -32,68 +38,70 @@ $(window).scroll(function() {
     $('#progress').css({
         'width': (scrollPercentage) + '%',
     });
-    if (currentScroll < 56)
-    $('#sidenavAccordion').css({
-        paddingTop: 'calc(56px - ' + (currentScroll) + 'px',
-    })
+    // if (currentScroll < 56) {
+    //     $('#sidenavAccordion').css({
+    //         paddingTop: 'calc(56px - ' + (currentScroll) + 'px',
+    //     });
+    // }
 });
 
 $('#alert_timer').fadeTo(2750, 500).slideUp(500, function() {
     $('#alert_timer').slideUp(500);
 });
 
-$(document).on('click', '.iconToggle', function(event) {
-    let thisVal = event.currentTarget;
-
-    let open = 'bi-eye';
-    let close = 'bi-eye-slash';
-
-    thisVal.classList.toggle(open);
-    thisVal.classList.toggle(close);
-
-    console.log(event)
-
-    let password = [...document.querySelectorAll('.password')];
-    password.map((item) => {
-        item.type = event.currentTarget.parentNode.nextElementSibling.checked ? 'password' : 'text';
+function showChar(event) {
+    const pass = [...document.body.querySelectorAll('.password')];
+    pass.map((item) => {
+        item.type = event.target.checked ? 'text' : 'password';
     });
-});
+}
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    const sidebarToggle = document.body.querySelector('#sidebarToggle');
-    if (sidebarToggle) {
-        // if (localStorage.getItem('sb|sidebar-toggle') === 'true') {
-        //     document.body.classList.toggle('sb-sidenav-toggled');
-        // }
+    if (document.body.querySelector('#sidebarToggle')) {
+        if (localStorage.getItem('isToggled') === 'true') {
+            document.body.classList.toggle('sb-sidenav-toggled');
+        }
         sidebarToggle.addEventListener('click', (event) => {
             event.preventDefault();
             document.body.classList.toggle('sb-sidenav-toggled');
-            localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
+            localStorage.setItem('isToggled', document.body.classList.contains('sb-sidenav-toggled'));
         });
-        if (document.querySelector('#datatablesSimple')) {
-            $('#datatablesSimple').DataTable({
+    }
+    if (document.body.querySelector('#fetchTable')) {
+        $('#fetchTable').DataTable({
+            responsive: true,
+            language: {
+                paginate: {
+                    previous: '<i class="fas fa-caret-left"></i>',
+                    next: '<i class="fas fa-caret-right"></i>'
+                }
+            }
+        });
+    }
+    if (document.body.querySelector('#camHolder')) {
+        const box = document.body.querySelector('.camera-box');
+        const mid = document.body.querySelector('.mid');
+        if (box.classList.contains('d-none')) {
+            box.remove();
+            mid.remove();
+        } else {
+            Webcam.set({
+                width: 480,
+                height: 360,
+                image_format: 'jpeg',
+                jpeg_quality: 90
             });
-        }
-        if (document.querySelector('#fetchTable')) {
-            $('#fetchTable').DataTable({
-                responsive: true,
-                scrollX: true,
-                language: {
-                    paginate: {
-                        previous: '<i class="fas fa-caret-left"></i>',
-                        next: '<i class="fas fa-caret-right"></i>',
-                    }
-                },
-            });
+            Webcam.attach('#camHolder');
         }
     }
 });
 
+
 function showToast(event) {
-    let target = document.querySelector('.toast');
-    let container = document.querySelector('#toast-container');
+    let target = document.body.querySelector('.toast');
+    let container = document.body.querySelector('#toast-container');
     let clonedTarget = target.cloneNode(true);
-    clonedTarget.children[1].innerHTML = event + ' has added.';
+    // clonedTarget.children[1].innerHTML = event + ' has added.';
     container.appendChild(clonedTarget);
     const bsToast = bootstrap.Toast.getOrCreateInstance(clonedTarget);
     bsToast.show();
@@ -102,4 +110,103 @@ function showToast(event) {
             container.removeChild(container.firstChild);
         }
     }, 3600);
+}
+
+// CKEDITOR
+// CKEDITOR.replace('taskDone');
+// $('#signature').signature();
+
+function capture() {
+    Webcam.snap((dataUri) => {
+        document.body.querySelector('#captureId').value = dataUri;
+        document.body.querySelector('#imgTemp').innerHTML = '<img src="'+dataUri+'" alt="Capture" class="img-fluid mt-3" width="100%"/>';
+    });
+}
+
+function clearCapture() {
+    document.body.querySelector('#captureId').value = '';
+    document.body.querySelector('#imgTemp').innerHTML = '';
+}
+
+function showGeo() {
+    if (navigator && navigator.geolocation) {
+        navigator.geolocation.watchPosition((position) => {
+            document.body.querySelector('#latId').value = position.coords.latitude;
+            document.body.querySelector('#longId').value = position.coords.longitude;
+        });
+    }
+}
+
+function getGeo() {
+    let geoPromise = new Promise((resolve, reject) => {
+        if (navigator && navigator.geolocation) {
+            navigator.geolocation.watchPosition((position) => {
+                resolve({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    accuracy: position.coords.accuracy
+                });
+            }, (error) => {
+                console.warn(`ERROR(${error.code}): ${error.message}`);
+            }, { enableHighAccuracy: true, timeout: 5000, maximumAge: 0 });
+        } else {
+            reject('Not supported.');
+        }
+    }).then((result) => {
+        document.body.querySelector('#latId').value = result.latitude;
+        document.body.querySelector('#longId').value = result.longitude;
+    }).catch((error) => {
+        console.warn(error);
+    }).finally((conclude) => {
+        navigator.geolocation.clearWatch(geoPromise);
+        console.log('Watch ended.');
+    });
+}
+
+
+if (document.body.querySelector('#map')) {
+    mapboxgl.accessToken = MAPBOX_TOKEN;
+
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v12',
+        zoom: 11,
+        preloadOnly: true,
+        animate: false,
+        center: [106.919428, -6.24653821],
+        essential: true,
+    });
+
+    const geo = new mapboxgl.GeolocateControl({
+        positionOptions: {
+            enableHighAccuracy: true
+        },
+        trackUserLocation: true,
+        showUserHeading: true,
+    });
+
+    map.addControl(geo);
+
+    geo.on('geolocate', (event) => {
+        document.body.querySelector('#latId').value = event.coords.latitude;
+        document.body.querySelector('#longId').value = event.coords.longitude;
+
+        let from = [106.919428, -6.24653821];
+        let to = [event.coords.longitude, event.coords.latitude];
+        let units = 'kilometers';
+
+        let distance = turf.distance(to, from, units).toFixed([2]);
+        document.body.querySelector('#distanceId').value = distance;
+    });
+
+    const circular = new MapboxCircle({lat: -6.24653821, lng: 106.919428}, 2460, {
+        editable: true,
+        minRadius: 500,
+        fillColor: '#2255D8',
+        draggable: false,
+    }).addTo(map);
+
+    const marker = new mapboxgl.Marker({
+        color: '#28375C',
+    }).setLngLat([106.919428, -6.24653821]).addTo(map);
 }

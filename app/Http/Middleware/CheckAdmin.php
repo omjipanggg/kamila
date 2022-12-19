@@ -16,9 +16,9 @@ class CheckAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->is_admin == 1) {
+        // if (Auth::check() && Auth::user()->role_id == 'ADMIN001') {
             return $next($request);
-        }
-        return redirect('/')->with('status', 'You are currently not allowed.');
+        // }
+        // return redirect('/','refresh')->with('status', 'You are currently not allowed.');
     }
 }

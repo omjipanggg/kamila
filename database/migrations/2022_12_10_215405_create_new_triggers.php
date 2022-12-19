@@ -14,8 +14,7 @@ class CreateNewTriggers extends Migration
      */
     public function up()
     {
-        DB::unprepared('CREATE TRIGGER bind_users AFTER INSERT ON `users` FOR EACH ROW BEGIN INSERT INTO `applicants` (`id`, `auth_id`, `name`, `email`) VALUES (NEW.id, NEW.id, NEW.name, NEW.email); END;');
-        DB::unprepared('CREATE TRIGGER bind_employees AFTER UPDATE ON `users` FOR EACH ROW BEGIN IF NEW.is_admin <=> 1 THEN INSERT INTO `employees`(`id`, `detail_id`) SELECT NEW.id, OLD.id FROM `users`; END IF; END;');
+        DB::unprepared('CREATE TRIGGER bind_employees AFTER INSERT ON `users` FOR EACH ROW BEGIN INSERT INTO `employees` (`user_id`, `name`, `email`, `created_at`, `updated_at`) VALUES (NEW.id, NEW.name, NEW.email, NEW.created_at, NEW.updated_at); END;');
     }
 
     /**
@@ -25,7 +24,6 @@ class CreateNewTriggers extends Migration
      */
     public function down()
     {
-        DB::unprepared('DROP TRIGGER `bind_users`');
         DB::unprepared('DROP TRIGGER `bind_employees`');
     }
 }

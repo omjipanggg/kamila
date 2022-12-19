@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
 function time_elapsed_string($datetime, $full = false) {
     $now = new DateTime;
     $ago = new DateTime($datetime);
@@ -26,5 +27,14 @@ function time_elapsed_string($datetime, $full = false) {
 
     if (!$full) $string = array_slice($string, 0, 1);
     return $string ? implode(', ', $string) . ' ago' : 'just now';
+}
+function greetings() {
+    $lead = date('G');
+    if ($lead >= 4 && $lead <= 11) { $greetings = 'pagi'; }
+    else if ($lead >= 12 && $lead <= 14) { $greetings = 'siang'; }
+    else if ($lead >= 16 && $lead <= 18) { $greetings = 'sore'; }
+    else { $greetings = 'malam'; }
+    
+    return $greetings;
 }
 ?>

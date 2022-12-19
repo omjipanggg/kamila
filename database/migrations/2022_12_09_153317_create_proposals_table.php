@@ -14,12 +14,17 @@ class CreateProposalsTable extends Migration
     public function up()
     {
         Schema::create('proposals', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('position');
-            $table->text('qualification');
-            $table->text('description');
-            $table->foreignUuid('vendor_id')->cascadeOnUpdate()->nullable()->constrained('vendors');
-            $table->foreignUuid('published_by')->cascadeOnUpdate()->nullable()->constrained('users');
+            $table->char('id', 8)->primary();
+            $table->char('department_id', 8)->index();
+            $table->foreign('department_id')->references('id')->on('departments')->cascadeOnUpdate()->nullable();
+            $table->text('qualification')->nullable();
+            $table->text('description')->nullable();
+            $table->string('permalink')->nullable();
+            $table->string('phone_number', 16)->nullable();
+            $table->char('vendor_id', 8)->index();
+            $table->foreign('vendor_id')->references('id')->on('vendors')->cascadeOnUpdate()->nullable();
+            $table->char('published_by', 8)->index();
+            $table->foreign('published_by')->references('id')->on('users')->cascadeOnUpdate()->nullable();
             $table->timestamps();
         });
     }

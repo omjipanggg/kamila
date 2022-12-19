@@ -6,14 +6,18 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "doctrine/dbal": "^3.5",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "koossaayy/laravel-mapbox": "^0.4.1",
         "kris/laravel-form-builder": "^1.51",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.4",
-        "laravelcollective/html": "^6.3"
+        "laravelcollective/html": "^6.3",
+        "realrashid/sweet-alert": "^5.1",
+        "stevebauman/location": "^6.5"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

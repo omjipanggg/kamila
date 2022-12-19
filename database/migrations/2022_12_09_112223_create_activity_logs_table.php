@@ -14,9 +14,11 @@ class CreateActivityLogsTable extends Migration
     public function up()
     {
         Schema::create('activity_logs', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('auth_id')->cascadeOnUpdate()->nullable()->constrained('users');
-            $table->string('state');
+            $table->id();
+            $table->char('user_id', 8)->index();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->nullable();
+            $table->text('query')->nullable();
+            $table->string('affected_table')->nullable();
             $table->timestamps();
         });
     }

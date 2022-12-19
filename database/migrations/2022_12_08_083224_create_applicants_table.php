@@ -14,10 +14,12 @@ class CreateApplicantsTable extends Migration
     public function up()
     {
         Schema::create('applicants', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->foreignUuid('auth_id')->cascadeOnUpdate()->nullable()->constrained('users');
+            $table->char('id', 8)->primary();
             $table->char('id_number', 16)->nullable()->unique();
+            $table->char('family_number', 16)->nullable();
+            $table->char('tax_number', 20)->nullable();
             $table->string('name')->nullable();
+            $table->char('gender_id', 1)->default(1)->index();
             $table->string('birth_place')->nullable();
             $table->date('birth_date')->nullable();
             $table->string('address_on_id')->nullable();
@@ -31,18 +33,21 @@ class CreateApplicantsTable extends Migration
             $table->string('phone_number')->nullable();
             $table->string('email')->unique();
             $table->char('username', 32)->nullable();
-            $table->string('religion')->nullable();
-            $table->char('gender', 1)->nullable();
-            $table->char('blood_type')->nullable();
             $table->string('last_education')->nullable();
             $table->string('picture')->nullable();
             $table->string('marital_status')->nullable();
+            $table->date('registration_date')->nullable();
             $table->date('ready_to_work')->nullable();
             $table->integer('expected_salary')->nullable();
             $table->string('expected_facility')->nullable();
             $table->string('resume')->nullable();
-            $table->rememberToken();
+            $table->char('status', 1)->default(0);
             $table->timestamps();
+        });
+        Schema::table('applicants', function (Blueprint $table) {
+            $table->foreign('gender_id')->references('id')->on('genders')->cascadeOnUpdate();
+            $table->foreignId('blood_type_id')->cascadeOnUpdate()->nullable()->constrained();
+            $table->foreignId('religion_id')->cascadeOnUpdate()->nullable()->constrained();
         });
     }
 

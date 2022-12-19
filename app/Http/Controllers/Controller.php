@@ -11,16 +11,26 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected $model, $action;
-
-    public function __construct($model = '', $action = '')
+    public function __construct()
     {
-    	$this->model = $model;
-    	$this->action = $action;
     }
 
-   	public function getAllColumns($model)
+   	public function getColNames($model)
    	{
    		return \Schema::getColumnListing($model->getTable());
    	}
+
+    public function getColTypes($model)
+    {
+      $table = $model->getTable();
+      $colNames = \Schema::getColumnListing($table);
+      $colTypes = array();
+      foreach ($colNames as $key => $value) {
+        array_push($colTypes, [
+          'field' => $value,
+          'type' => \Schema::getColumnType($table, $value),
+        ]);
+      }
+      return $colTypes;
+    }
 }
