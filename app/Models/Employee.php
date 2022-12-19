@@ -38,5 +38,6 @@ class Employee extends Model
         'marital_status',
         'religion_id',
         'blood_type_id',
+        'work_location_id',
     ];
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Codedge\Fpdf\Fpdf\Fpdf;
 use App\Models\Applicant;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,12 @@ class ApplicantController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    protected $fpdf;
+
     public function __construct()
     {
         $this->middleware('auth');
+        $this->fpdf = new Fpdf('P', 'cm', 'A4');
     } 
 
     public function getMenu()
@@ -50,7 +54,7 @@ class ApplicantController extends Controller
                 'religion_id' => \App\Models\Religion::pluck('name', 'id')->toArray(),
                 'blood_type_id' => \App\Models\BloodType::pluck('name', 'id')->toArray(),
             ],
-            'model' => new \App\Models\Applicant,
+            'model' => new Applicant,
         ]);
 
         $context = [
@@ -69,7 +73,12 @@ class ApplicantController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $result = $request->all();
+        $result['id'] = \Str::uuid(8)->toString();
+        $save = Applicant::create($result);
+        if ($save) {
+            return back()->with('status', 'Berhasil menyimpan data.');
+        }
     }
 
     /**
@@ -115,6 +124,16 @@ class ApplicantController extends Controller
     public function testing($id) {}
     public function scoring($id) {}
     public function offering($id) {}
+
+    public function genderateFpdf($table, Request $request)
+    {
+
+        $this->fpdf->SetFont('Arial', 'B', 15);
+        $this->fpdf->AddPage();
+        $this->fpdf->Cell(40, 10, $request->all(), 1);
+        $this->fpdf->Cell(60, 10, $table, 1);
+        $this->fpdf->Output();
+    }
 
     public function destroy($id)
     {
