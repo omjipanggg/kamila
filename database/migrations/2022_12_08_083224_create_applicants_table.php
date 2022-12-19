@@ -41,7 +41,7 @@ class CreateApplicantsTable extends Migration
             $table->integer('expected_salary')->nullable();
             $table->string('expected_facility')->nullable();
             $table->string('resume')->nullable();
-            $table->char('status', 1)->default(0);
+            $table->char('status', 1)->default(0)->nullable();
             $table->timestamps();
         });
         Schema::table('applicants', function (Blueprint $table) {

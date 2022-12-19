@@ -74,7 +74,9 @@ class ApplicantController extends Controller
     public function store(Request $request)
     {
         $result = $request->all();
-        $result['id'] = \Str::uuid(8)->toString();
+        $result['id'] = substr(\Str::uuid(), 0, 8);
+        $result['created_at'] = now();
+        $result['updated_at'] = now();
         $save = Applicant::create($result);
         if ($save) {
             return back()->with('status', 'Berhasil menyimpan data.');
