@@ -68,7 +68,7 @@ class RegisterController extends Controller
             'id' => substr(Str::uuid()->toString(), 0, 8),
             'name' => ucwords($data['name']),
             'email' => $data['email'],
-            'role_id' => 'BASIC001',
+            'role_id' => 2,
             'password' => Hash::make($data['password']),
         ]);
     }

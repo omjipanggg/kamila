@@ -14,4 +14,11 @@ class BloodType extends Model
     protected $fillable = [
     	'name',
     ];
+
+    function applicant() {
+    	return $this->belongsToMany(\App\Models\Applicant::class);
+    }
+    function employee() {
+    	return $this->belongsToMany(\App\Models\Employee::class);
+    }
 }

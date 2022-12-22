@@ -16,7 +16,7 @@ class CreateUserAttendancesTable extends Migration
         Schema::create('user_attendances', function (Blueprint $table) {
             $table->id();
             $table->char('user_id', 8)->index();
-            $table->char('attendance_id', 8)->index();
+            $table->integer('attendance_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->nullable();
             $table->foreign('attendance_id')->references('id')->on('attendances')->cascadeOnUpdate()->nullable();
             $table->date('attendance_date');

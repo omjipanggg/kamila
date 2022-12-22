@@ -12,14 +12,13 @@ class Attendance extends Model
     protected $table = "attendances";
 
     protected $fillable = [
-        "id",
     	"name",
     	"on_duty",
     	"off_duty",
         "description",
     ];
     
-    protected $casts = [
-        'id' => 'string',
-    ];
+    function user() {
+        return $this->belongsToMany(\App\Models\UserAttendance::class);
+    }
 }

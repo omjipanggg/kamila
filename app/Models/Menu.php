@@ -12,7 +12,6 @@ class Menu extends Model
     protected $table = "menus";
 
     protected $fillable = [
-    	'id',
     	'name',
     	'role_id',
         'icon',
@@ -26,8 +25,7 @@ class Menu extends Model
     	'has_child' => 'boolean',
     ];
 
-    public function childs()
-    {
-        return $this->hasMany('\App\Models\Menu', 'parent_id', 'id');
+    public function child(){
+        return $this->hasMany(\App\Models\Menu::class, 'parent_id', 'id');
     }
 }

@@ -19,7 +19,7 @@ class Vendor extends Model
     	'description',
     ];
 
-    protected $casts = [
-        'id' => 'string',
-    ];
+    function proposal() {
+        return $this->belongsTo(\App\Models\Proposal::class);
+    }
 }

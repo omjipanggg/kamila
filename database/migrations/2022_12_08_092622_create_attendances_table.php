@@ -14,7 +14,7 @@ class CreateAttendancesTable extends Migration
     public function up()
     {
         Schema::create('attendances', function (Blueprint $table) {
-            $table->char('id', 8)->primary();
+            $table->increments('id', 4);
             $table->string('name');
             $table->time('on_duty');
             $table->time('off_duty');
@@ -22,10 +22,10 @@ class CreateAttendancesTable extends Migration
             $table->timestamps();
         });
 
+        \DB::statement('ALTER TABLE attendances CHANGE id id INT(4) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
 
         \DB::table('attendances')->insert([
             [
-                'id' => 'ATD00001',
                 'name' => 'Office Hour I (07:00 - 16:00)',
                 'on_duty' => '07:00',
                 'off_duty' => '17:00',
@@ -33,7 +33,6 @@ class CreateAttendancesTable extends Migration
                 'created_at' => now(),
                 'updated_at' => now(),
             ],[
-                'id' => 'ATD00002',
                 'name' => 'Office Hour II (08:00 - 17:00)',
                 'on_duty' => '08:00',
                 'off_duty' => '17:00',
@@ -41,10 +40,16 @@ class CreateAttendancesTable extends Migration
                 'created_at' => now(),
                 'updated_at' => now(),
             ],[
-                'id' => 'ATD00003',
-                'name' => 'Shift I (07:00 - 14:00)',
+                'name' => 'Shift I (07:00 - 13:00)',
                 'on_duty' => '07:00',
                 'off_duty' => '14:00',
+                'description' => NULL,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],[
+                'name' => 'Shift II (14:00 - 20:00)',
+                'on_duty' => '14:00',
+                'off_duty' => '20:00',
                 'description' => NULL,
                 'created_at' => now(),
                 'updated_at' => now(),

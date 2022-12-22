@@ -19,6 +19,7 @@ class WorkLocation extends Model
     	'district',
     	'state',
     	'city',
+        'province',
     	'zipcode',
     	'latitude',
     	'longitude',

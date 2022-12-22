@@ -16,7 +16,7 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->string('name', 32);
-            $table->char('role_id', 8)->index();
+            $table->integer('role_id')->unsigned();
             $table->foreign('role_id')->references('id')->on('roles')->cascadeOnUpdate()->nullable();
             $table->string('icon')->nullable();
             $table->tinyInteger('parent_id')->default(0)->nullable();
@@ -29,7 +29,7 @@ class CreateMenusTable extends Migration
         \DB::table('menus')->insert([
             [
                 'name' => 'Dashboard',
-                'role_id' => 'ADMIN001',
+                'role_id' => 1,
                 'icon' => 'fa-house-chimney',
                 'route' => 'dashboard.index',
                 'parent_id' => 0,
@@ -40,7 +40,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Dashboard',
-                'role_id' => 'BASIC001',
+                'role_id' => 2,
                 'icon' => 'fa-house-chimney',
                 'route' => 'dashboard.index',
                 'parent_id' => 0,
@@ -51,7 +51,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Presensi',
-                'role_id' => 'BASIC001',
+                'role_id' => 2,
                 'icon' => 'fa-bell',
                 'route' => 'employee.ring',
                 'parent_id' => 0,
@@ -62,7 +62,18 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Presensi',
-                'role_id' => 'ADMIN001',
+                'role_id' => 3,
+                'icon' => 'fa-bell',
+                'route' => 'employee.ring',
+                'parent_id' => 0,
+                'has_child' => 0,
+                'model' => NULL,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Presensi',
+                'role_id' => 1,
                 'icon' => 'fa-bell',
                 'route' => 'employee.attendance',
                 'parent_id' => 0,
@@ -73,7 +84,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Izin',
-                'role_id' => 'BASIC001',
+                'role_id' => 2,
                 'icon' => 'fa-umbrella-beach',
                 'route' => 'employee.permit',
                 'parent_id' => 0,
@@ -84,7 +95,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Lembur',
-                'role_id' => 'BASIC001',
+                'role_id' => 2,
                 'icon' => 'fa-hourglass-half',
                 'route' => 'employee.overtime',
                 'parent_id' => 0,
@@ -95,7 +106,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Patroli',
-                'role_id' => 'BASIC001',
+                'role_id' => 3,
                 'icon' => 'fa-taxi',
                 'route' => 'employee.patrol',
                 'parent_id' => 0,
@@ -106,7 +117,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Payslip',
-                'role_id' => 'BASIC001',
+                'role_id' => 2,
                 'icon' => 'fa-sack-dollar',
                 'route' => 'employee.payslip',
                 'parent_id' => 0,
@@ -117,7 +128,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Akun Terdaftar',
-                'role_id' => 'ADMIN001',
+                'role_id' => 1,
                 'icon' => 'fa-users',
                 'route' => 'user.index',
                 'parent_id' => 0,
@@ -128,7 +139,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Rekrutmen',
-                'role_id' => 'ADMIN001',
+                'role_id' => 1,
                 'icon' => 'fa-file-circle-plus',
                 'route' => 'dashboard.index',
                 'parent_id' => 0,
@@ -139,7 +150,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Data Pelamar',
-                'role_id' => 'ADMIN001',
+                'role_id' => 1,
                 'icon' => 'fa-user-plus',
                 'route' => 'applicant.index',
                 'parent_id' => 11,
@@ -150,7 +161,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Lowongan Kerja',
-                'role_id' => 'ADMIN001',
+                'role_id' => 1,
                 'icon' => 'fa-folder-open',
                 'route' => 'proposal.index',
                 'parent_id' => 11,
@@ -161,7 +172,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Seleksi',
-                'role_id' => 'ADMIN001',
+                'role_id' => 1,
                 'icon' => 'fa-flask-vial',
                 'route' => 'applicant.test',
                 'parent_id' => 11,
@@ -172,7 +183,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Penilaian',
-                'role_id' => 'ADMIN001',
+                'role_id' => 1,
                 'icon' => 'fa-medal',
                 'route' => 'applicant.score',
                 'parent_id' => 11,
@@ -183,7 +194,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'Offering Letter',
-                'role_id' => 'ADMIN001',
+                'role_id' => 1,
                 'icon' => 'fa-file-lines',
                 'route' => 'applicant.approval',
                 'parent_id' => 11,
@@ -194,7 +205,7 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'FAQ',
-                'role_id' => 'ADMIN001',
+                'role_id' => 1,
                 'icon' => 'fa-circle-question',
                 'route' => 'dashboard.faq',
                 'parent_id' => 0,
@@ -205,7 +216,18 @@ class CreateMenusTable extends Migration
             ],
             [
                 'name' => 'FAQ',
-                'role_id' => 'BASIC001',
+                'role_id' => 2,
+                'icon' => 'fa-circle-question',
+                'route' => 'dashboard.faq',
+                'parent_id' => 0,
+                'has_child' => 0,
+                'model' => 'Fask',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'FAQ',
+                'role_id' => 3,
                 'icon' => 'fa-circle-question',
                 'route' => 'dashboard.faq',
                 'parent_id' => 0,

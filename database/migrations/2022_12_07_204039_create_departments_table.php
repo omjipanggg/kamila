@@ -14,73 +14,64 @@ class CreateDepartmentsTable extends Migration
     public function up()
     {
         Schema::create('departments', function (Blueprint $table) {
-            $table->char('id', 8)->primary();
+            $table->increments('id', 3);
+            $table->char('lead_id', 3);
             $table->string('name');
             $table->string('description')->nullable();
             $table->timestamps();
         });
 
+        \DB::statement('ALTER TABLE departments CHANGE id id INT(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
+
         \DB::table('departments')->insert([
             [
-                'id' => 'ITD00001',
-                'name' => 'IT Developer',
+                'lead_id' => 'BND',
+                'name' => 'Business and Development',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 'ITS00002',
-                'name' => 'IT Support',
+                'lead_id' => 'TRE',
+                'name' => 'Treasury',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 'ITR00003',
-                'name' => 'IT R&amp;D',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 'FIN00001',
+                'lead_id' => 'FIN',
                 'name' => 'Finance',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 'MAR00001',
+                'lead_id' => 'MAR',
                 'name' => 'Marketing',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 'LOG00001',
+                'lead_id' => 'LOG',
                 'name' => 'Logistik',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'id' => 'ADM00099',
-                'name' => 'Admin',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 'DRV00023',
-                'name' => 'Driver',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 'DRV00024',
-                'name' => 'Dedicated Driver',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'id' => 'HRD00001',
+                'lead_id' => 'HRD',
                 'name' => 'Human Resource',
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]
+            ],
+            [
+                'lead_id' => 'CNP',
+                'name' => 'Care and Protection',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'lead_id' => 'SUP',
+                'name' => 'Support',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 

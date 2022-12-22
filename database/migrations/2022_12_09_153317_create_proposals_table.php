@@ -15,8 +15,8 @@ class CreateProposalsTable extends Migration
     {
         Schema::create('proposals', function (Blueprint $table) {
             $table->char('id', 8)->primary();
-            $table->char('department_id', 8)->index();
-            $table->foreign('department_id')->references('id')->on('departments')->cascadeOnUpdate()->nullable();
+            $table->integer('position_id')->unsigned();
+            $table->foreign('position_id')->references('id')->on('positions')->cascadeOnUpdate();
             $table->text('qualification')->nullable();
             $table->text('description')->nullable();
             $table->string('permalink')->nullable();

@@ -22,20 +22,16 @@ class ApplicantController extends Controller
         $this->fpdf = new Fpdf('P', 'cm', 'A4');
     } 
 
-    public function getMenu()
-    {
-        return \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get();
-    }
-
     public function index()
     {
         $context = [
             'title' => 'Data Pelamar',
-            'menus' => \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get(),
             'model' => new Applicant,
             'records' => Applicant::all(),
+            'menus' => $this->getMenu(),
             'columns' => $this->getColNames(new Applicant),
         ];
+
         return view('pages.applicant.index', $context);
     }
 
@@ -44,9 +40,9 @@ class ApplicantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(\Kris\LaravelFormBuilder\FormBuilder $fb)
+    public function create(\Kris\LaravelFormBuilder\FormBuilder $builder)
     {
-        $form = $fb->create('\App\Forms\InsertForm', [
+        $form = $builder->create('\App\Forms\InsertForm', [
             'method' => 'POST',
             'url' => route('applicant.store'),
             'data' => [
@@ -58,7 +54,7 @@ class ApplicantController extends Controller
         ]);
 
         $context = [
-            'title' => 'Applicant',
+            'title' => 'Data Pelamar',
             'form' => $form,
             'menus' => $this->getMenu(),
         ];
@@ -75,11 +71,12 @@ class ApplicantController extends Controller
     {
         $result = $request->all();
         $result['id'] = substr(\Str::uuid(), 0, 8);
+        // $result['status'] = 1;
         $result['created_at'] = now();
         $result['updated_at'] = now();
         $save = Applicant::create($result);
         if ($save) {
-            return back()->with('status', 'Berhasil menyimpan data.');
+            return redirect()->route('applicant.index')->with('status', 'Berhasil menyimpan data.');
         }
     }
 
@@ -127,14 +124,42 @@ class ApplicantController extends Controller
     public function scoring($id) {}
     public function offering($id) {}
 
-    public function genderateFpdf($table, Request $request)
-    {
+    public function indexFpdf() {
+    }
 
-        $this->fpdf->SetFont('Arial', 'B', 15);
-        $this->fpdf->AddPage();
-        $this->fpdf->Cell(40, 10, $request->all(), 1);
-        $this->fpdf->Cell(60, 10, $table, 1);
-        $this->fpdf->Output();
+    public function createPDF($id)
+    {
+        $applicant = Applicant::where('id', $id)->pluck('name')->first();
+        $context = [
+            'dates' => [
+                'start' => '2022-12-01',
+                'end' => '2023-05-01',
+            ],
+            'newlyId' => \App\Models\Employee::orderBy('id', 'desc')->pluck('id')->first(),
+            'applicants' => Applicant::where('id', $id)->get(),
+        ];
+        $pdf = \PDF::loadView('pages.applicant.contract', $context)->setPaper('A4');
+        return $pdf->download('PKWT - ' . $applicant . ' - ' . date('Ymd') . '.pdf');
+    }
+
+    public function previewPDF()
+    {
+        // applicant
+        // vendor
+        // department
+        // join_date
+        // expire_date
+        // salary
+
+        $context = [
+            'dates' => [
+                'start' => '2022-12-01',
+                'end' => '2023-05-01',
+            ],
+            'newlyId' => \App\Models\Employee::orderBy('id', 'desc')->pluck('id')->first(),
+            'applicants' => Applicant::where('id', 'e0d096b9')->get(),
+        ];
+        return view('pages.applicant.contract', $context);
     }
 
     public function destroy($id)

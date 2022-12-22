@@ -14,15 +14,14 @@ class CreateGendersTable extends Migration
     public function up()
     {
         Schema::create('genders', function (Blueprint $table) {
-            $table->char('id', 1)->primary();
+            $table->id();
             $table->string('name');
             $table->timestamps();
         });
 
         \DB::table('genders')->insert([
-            ['id' => '1', 'name' => 'Laki-laki'],
-            ['id' => '4', 'name' => 'Perempuan'],
-            ['id' => '5', 'name' => 'Lainnya']
+            ['id' => 1, 'name' => 'Laki-laki', 'created_at' => now(), 'updated_at' => now()],
+            ['id' => 4, 'name' => 'Perempuan', 'created_at' => now(), 'updated_at' => now()]
         ]);
     }
 

@@ -10,6 +10,8 @@ class Applicant extends Model
     use HasFactory;
 
     protected $table = 'applicants';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
 
     protected $fillable = [
         'id',
@@ -30,7 +32,7 @@ class Applicant extends Model
     	'username',
     	'religion_id',
     	'gender_id',
-    	'blood_type',
+    	'blood_type_id',
     	'last_education',
     	'picture',
     	'marital_status',
@@ -44,4 +46,24 @@ class Applicant extends Model
     protected $casts = [
         'id' => 'string',
     ];
+
+    function status() {
+        return $this->hasOne(\App\Models\ApplicantStat::class);
+    }
+
+    function gender() {
+        return $this->hasOne(\App\Models\Gender::class);
+    }
+
+    function bloodType() {
+        return $this->hasOne(\App\Models\BloodType::class);
+    }
+
+    function religion() {
+        return $this->hasOne(\App\Models\Religion::class);
+    }
+
+    // function status() {
+    //     return $this->hasOne(\App\Models\ApplicantStat::class);
+    // }
 }

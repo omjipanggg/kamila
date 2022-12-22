@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->char('id', 8)->primary();
             $table->string('name')->nullable();
-            $table->char('role_id', 8)->index();
+            $table->integer('role_id')->unsigned();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -27,13 +27,13 @@ class CreateUsersTable extends Migration
         });
         
         Schema::table('users', function (Blueprint $table) {
-            $table->foreign('role_id')->references('id')->on('roles')->cascadeOnUpdate()->default('BASIC001')->nullable();
+            $table->foreign('role_id')->references('id')->on('roles')->cascadeOnUpdate();
         });
 
         \DB::table('users')->insert([
             'id' => substr(\Str::uuid(), 0, 8),
             'name' => 'Administrator',
-            'role_id' => 'ADMIN001',
+            'role_id' => 1,
             'email' => 'admin@kamila.com',
             'password' => '$2y$10$Ke4KhwYXd/3DaxgiUNX7a.pxbXF01hnjVMBomJxF/nDrrEpKg42yK',
             // 'remember_token' => \Str::random(64),

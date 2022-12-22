@@ -11,6 +11,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $context = [
@@ -18,7 +24,6 @@ class UserController extends Controller
             'model' => new \App\Models\User,
             'records' => \App\Models\User::all(),
             'columns' => $this->getColNames(new \App\Models\User),
-            'colTypes' => $this->getColTypes(new \App\Models\User),
             'menus' => \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get(),
         ];
         return view('pages.user.index', $context);

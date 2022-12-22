@@ -36,6 +36,9 @@ Route::get('applicants/test', [App\Http\Controllers\ApplicantController::class, 
 Route::get('applicants/score', [App\Http\Controllers\ApplicantController::class, 'scoring'])->name('applicant.score');
 Route::get('applicants/offering_letter', [App\Http\Controllers\ApplicantController::class, 'offering'])->name('applicant.approval');
 
+Route::get('applicants/pkwt/{id}/print', [App\Http\Controllers\ApplicantController::class, 'createPDF'])->name('applicant.pkwt');
+Route::get('applicants/pkwt/preview', [App\Http\Controllers\ApplicantController::class, 'previewPDF'])->name('applicant.preview');
+
 Route::get('applicants/create', [App\Http\Controllers\ApplicantController::class, 'create'])->name('applicant.create');
 Route::post('applicants/store', [App\Http\Controllers\ApplicantController::class, 'store'])->name('applicant.store');
 

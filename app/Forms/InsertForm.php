@@ -37,7 +37,9 @@ class InsertForm extends Form
                 $this->add($value, 'select', [
                     'label' => $value,
                     'choices' => $this->getData($value),
+                    'empty_value' => '——Pilih satu——',
                     'attr' => [
+                        'placeholder' => $value,
                         'class' => 'form-control form-control-sm',
                     ],
                 ]);
@@ -49,7 +51,10 @@ class InsertForm extends Form
                             'class' => 'form-control form-control-sm',
                         ],
                     ]);
-                } else {                
+                } 
+                else if ($value == 'id') {}
+                else if ($value == 'status') {}
+                else {                
                     $this->add($value, $type, [
                         'label' => $value,
                         'attr' => [
@@ -60,7 +65,7 @@ class InsertForm extends Form
                 }
             }
         }
-        $this->add('submit&nbsp;&nbsp;<i class="fas fa-trash-alt"></i>', 'submit',
+        $this->add('save&nbsp;&nbsp;<i class="fas fa-floppy-disk"></i>', 'submit',
             ['attr' => [
                 'class' => 'btn btn-sm btn-color my-2',
             ],

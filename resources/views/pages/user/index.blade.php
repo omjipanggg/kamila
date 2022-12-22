@@ -16,10 +16,5 @@
         
     </div>
 </main>
-
-{{ var_dump($columns) }}
-<br>
-<br>
-{{ var_dump($colTypes) }}
 <div class="big"></div>
 @endsection

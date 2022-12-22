@@ -17,4 +17,7 @@ class ActivityLog extends Model
     	'query',
     	'affected_table',
     ];
+    function user() {
+    	return $this->belongsToMany(\App\Models\User::class);
+    }
 }

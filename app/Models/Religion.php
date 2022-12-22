@@ -12,4 +12,12 @@ class Religion extends Model
     protected $table = 'religions';
 
     protected $fillable = ['name']; 
+
+    function applicant() {
+    	return $this->belongsToMany(\App\Models\User::class);
+    }
+
+    function employee() {
+    	return $this->belongsToMany(\App\Models\Employee::class);
+    }
 }

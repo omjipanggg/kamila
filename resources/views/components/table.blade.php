@@ -10,8 +10,6 @@
                 @foreach($columns as $data)
                     <th>{{ $data }}</th>
                 @endforeach
-                <th>Action</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -20,8 +18,6 @@
                 @foreach($columns as $key => $data)
                     <td>{{ $record->$data }}</td>
                 @endforeach
-                    <td>Edit</td>
-                    <td>Delete</td>
                 </tr>
             @endforeach
         </tbody>
@@ -30,8 +26,6 @@
                 @foreach($columns as $data)
                     <th>{{ $data }}</th>
                 @endforeach
-                <th>Action</th>
-                <th>Action</th>
             </tr>
         </tfoot>
     </table>

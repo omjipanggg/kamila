@@ -13,7 +13,18 @@ class Department extends Model
 
     protected $fillable = [
     	'id',
+        'lead_id',
     	'name',
     	'description',
     ];
+
+    function employee() {
+    	return $this->belongsToMany(\App\Models\Employee::class);
+    }
+    function position() {
+        return $this->belongsToMany(\App\Models\Position::class);
+    }
+    function proposal() {
+    	return $this->belongsToMany(\App\Models\Proposal::class);
+    }
 }

@@ -33,4 +33,9 @@ class Controller extends BaseController
       }
       return $colTypes;
     }
+    
+    public function getMenu()
+    {
+        return \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get();
+    }
 }

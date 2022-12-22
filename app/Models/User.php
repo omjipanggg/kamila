@@ -49,4 +49,15 @@ class User extends Authenticatable
         'id' => 'string',
     ];
 
+    function role() {
+        return $this->hasOne(\App\Models\Role::class);
+    }
+
+    function attendance() {
+        return $this->belongsToMany(\App\Models\UserAttendance::class);
+    }
+
+    function employee() {
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
 }

@@ -28,4 +28,12 @@ class UserAttendance extends Model
         'off_distance',
     	'description',
     ];
+
+    function user() {
+        return $this->belongsToMany(\App\Models\User::class);
+    }
+    function attendance() {
+        return $this->belongsToMany(\App\Models\Attendance::class);
+    }
+
 }

@@ -22,6 +22,7 @@ class CreateWorkLocationsTable extends Migration
             $table->string('district')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
+            $table->string('province')->nullable();
             $table->char('zipcode', 5)->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
@@ -36,7 +37,8 @@ class CreateWorkLocationsTable extends Migration
             'district' => 'Duren Sawit',
             'state' => 'Duren Sawit',
             'city' => 'Jakarta Timur',
-            'name' => '13440',
+            'city' => 'DKI Jakarta',
+            'zipcode' => '13440',
             'latitude' => '-6.2465382',
             'longitude' => '106.9168531',
             'created_at' => now(),

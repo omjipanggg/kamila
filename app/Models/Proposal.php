@@ -21,4 +21,17 @@ class Proposal extends Model
     	'vendor_id',
     	'published_by',
     ];
+
+    function publishedBy() {
+        return $this->belongsTo(\App\Models\Employee::class);
+    }
+
+    function vendor() {
+        return $this->belongsTo(\App\Models\Vendor::class);
+    }
+
+    function department() {
+        return $this->belongsTo(\App\Models\Department::class);
+    }
+
 }

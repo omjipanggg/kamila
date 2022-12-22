@@ -37,4 +37,69 @@ function greetings() {
     
     return $greetings;
 }
+function monthToRome($month) {
+    $monthTuple = ['0','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII'];
+    return $monthTuple[$month];
+}
+function dayString($day) {
+    $dayTuple = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jum\'at', 'Sabtu'];
+    return $dayTuple[$day];
+}
+function numString($date) {
+    $dateTuple = ['Nol', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
+
+    $temp = '';
+
+    if ($date < 12) {
+        $temp = $dateTuple[$date];
+    } else if ($date < 20) {
+        $temp = numString($date - 10) . ' Belas';
+    } else if ($date < 100) {
+        if ($date%10 == 0) {
+            $temp = numString($date/10) . " Puluh";
+        } else {
+            $temp = numString($date/10) . " Puluh " . numString($date%10);
+        }
+    } else if ($date < 200) {
+        $temp = " Seratus " . numString($date-100);
+    } else if ($date < 1000) {
+        $temp = numString($date/100) . " Ratus " . numString($date%100);
+    } else if ($date < 2000) {
+        $temp = " Seribu " . $numString($date-1000);
+    } else if ($date < 1000000) {
+        $temp = numString($date/1000) . " Ribu " . numString($date%1000);
+    } else {
+        $temp = "#REF";
+    }
+    return trim($temp);
+}
+
+function monthString($month) {
+    $monthTuple = ['', 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'Septemper', 'Oktober', 'November', 'Desember'];
+    return $monthTuple[$month];
+}
+
+function yearString($date) {
+    $temp = '';
+
+    return trim($temp);
+}
+
+function printId($id) {
+    $id = $id+1;
+    $year = date('y');
+
+    $result = 'B02' . $year . sprintf('%03s', $id);
+    return $result;
+}
+
+function countDays($start, $end) {
+    $start = date_create($start);
+    $end = date_create($end);
+
+    $months = $end->diff($start)->format('%m') + 1;
+    $days = $end->diff($start)->format('%d');
+ 
+   return trim($months . ' (' . numString($months) . ') bulan, ' . $days . ' (' . numString($days) . ') hari,');
+}
 ?>
