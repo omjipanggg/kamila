@@ -4,7 +4,6 @@
             <div class="nav">
                 <span class="sb-sidenav-menu-heading mt-3">Manajemen</span>
 
-{{--
                 @foreach($menus as $menu)
 
                 @if($menu->has_param)
@@ -17,9 +16,6 @@
                 </a>
 
                 @endforeach
---}}
-                @include('components.functions')
-                {{ getMenu($menus) }}
             </div>
         </div>
             {{ Form::open(['route' => 'dashboard.searchVar', 'class' => 'form form-inline d-inline-block']) }}
