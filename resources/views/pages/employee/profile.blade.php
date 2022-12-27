@@ -13,10 +13,10 @@
 
                 <div class="card-body">
                     @foreach($records as $data)
-                        <p>{{ __('ID:') }}&nbsp;<strong>{{ $data['lead_id'] }}{{ $data['id'] }}</strong></p>
+                        <p>{{ __('ID:') }}&nbsp;<strong>{{ $data['lead_id'] }}{{ $data['year_id'] }}{{ sprintf('%03s', $data['id']) }}</strong></p>
                         <p>{{ __('Name:') }}&nbsp;<strong>{{ $data['name'] }}</strong></p>
                         <p>{{ __('Email:') }}&nbsp;<strong>{{ $data['email'] }}</strong></p>
-                        <p>{{ __('Role:') }}&nbsp;<strong>{{ \Auth::user()->role_id }}</strong></p>
+                        <p>{{ __('Role:') }}&nbsp;<strong>{{ $data->user->role->name }}</strong></p>
                     @endforeach
                 </div>
                 <div class="card-footer">

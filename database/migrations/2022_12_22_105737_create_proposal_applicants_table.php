@@ -19,7 +19,7 @@ class CreateProposalApplicantsTable extends Migration
             $table->char('applicant_id', 8)->index();
             $table->foreign('applicant_id')->references('id')->on('applicants')->cascadeOnUpdate();
             $table->string('resume')->nullable();
-            $table->boolean('status')->default(0);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
 

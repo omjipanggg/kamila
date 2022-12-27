@@ -22,6 +22,8 @@ class CreateEmployeeStatusTable extends Migration
         \DB::table('employee_status')->insert([
             ['name' => 'Kontrak', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Tetap', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Tenaga Harian Lepas (THL)', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Magang', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

@@ -102,10 +102,16 @@ class Controller extends BaseController
         $start = date_create($start);
         $end = date_create($end);
 
-        $months = $end->diff($start)->format('%m') + 1;
-        $days = $end->diff($start)->format('%d');
-     
-       return trim($months . ' (' . $this->numString($months) . ') bulan, ' . $days . ' (' . $this->numString($days) . ') hari,');
+        $dateDif = date_diff($end, $start);
+
+        if ($dateDif->format('%m') !== 0) {
+            $months = $dateDif->format('%m');
+        } else {
+            $months = $dateDif->format('%m') + 1;
+        }
+        $days = $dateDif->format('%d');
+
+        return trim($months . ' (' . $this->numString($months) . ') bulan, ' . $days . ' (' . $this->numString($days) . ') hari,');
     }
 
     function dateFormat($date) {

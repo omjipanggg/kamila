@@ -131,15 +131,6 @@ class ApplicantController extends Controller
     public function testing() {}
     public function scoring($id) {}
 
-    public function selectTemplate(Request $request) {
-        // $context = [
-        //     'title' => 'Fill Variables',
-        //     'menus' => $this->getMenu(),
-        //     'selectedTemplate' => 'ASD',
-        // ];
-        // return view('pages.applicant.contractor', $context);
-    }
-
     public function createPKWT($id)
     {
         $context = [
@@ -191,7 +182,10 @@ class ApplicantController extends Controller
     }
 
     public function dynamicForm() {
-        $request->validate(['template' => 'required', 'selectedId' => 'required|min:1'], ['selectedId.required' => 'The record field is required.']);
+        $request->validate(
+            ['template' => 'required', 'selectedId' => 'required|min:1'],
+            ['selectedId.required' => 'The record field is required.'],
+        );
 
         $destination = storage_path('app\\public\\uploads\\templates\\');
         $filename = $request->file('template')->getClientOriginalName();
@@ -240,7 +234,10 @@ class ApplicantController extends Controller
     }
 
     public function uploadTemplate(Request $request) {
-        $request->validate(['template' => 'required', 'selectedId' => 'required|min:1'], ['selectedId.required' => 'The record field is required.']);
+        $request->validate(
+            ['template' => 'required', 'selectedId' => 'required|min:1'],
+            ['selectedId.required' => 'The record field is required.'],
+        );
 
         $destination = storage_path('app/public/uploads/templates/');
         $filename = $request->file('template')->getClientOriginalName();
@@ -253,7 +250,7 @@ class ApplicantController extends Controller
         }
 
         $context = [
-            'title' => 'Fill PKWT Variables',
+            'title' => 'PKWT Variables',
             'menus' => $this->getMenu(),
             'proposalId' => \App\Models\ProposalApplicant::where('id', $request->selectedId)->with(['applicant', 'proposal'])->pluck('id')->first(),
             'templateId' => $filename,
@@ -266,17 +263,24 @@ class ApplicantController extends Controller
         $tuples = \App\Models\ProposalApplicant::where('id', $id)->with(['applicant', 'proposal'])->get();
 
         $word = new \PhpOffice\PhpWord\TemplateProcessor(storage_path('app/public/uploads/templates/' . $request->templateId));
+
+        $newlyId = '';
+
+        if (!isset($request->newEmployeeId)) { $newlyId = \App\Models\Employee::orderBy('id', 'desc')->pluck('id')->first(); }
+        else { $newlyId = $request->newEmployeeId; }
         
         foreach ($tuples as $tuple) {
+            $name = $tuple->applicant->name;
             $word->setValues([
                 'uniqueHead' => $request->uniqueId,
-                'newEmployeeId' => $request->newEmployeeId,
+                'newEmployeeId' => $newlyId,
                 'startDate' => $this->dateIndo($request->startDate),
                 'endDate' => $this->dateIndo($request->endDate),
                 'primarySalary' => number_format($request->primarySalary,0,',','.'),
                 'secondarySalary' => number_format($request->secondarySalary,0,',','.'),
                 'totalSalary' => number_format(intval($request->primarySalary) + intval($request->secondarySalary),0,',','.'),
-                'applicantName' => $tuple->applicant->name,
+                'applicantName' => $name,
+                'applicantNameBig' => strtoupper($name),
                 'dayString' => $this->dayString(date('w')),
                 'domString' => $this->numString(date('j')),
                 'monthString' => $this->monthString(date('n')),
@@ -293,7 +297,6 @@ class ApplicantController extends Controller
                 'workPlace' => $request->workPlace, 
                 'countDays' => $this->countDays($request->startDate, $request->endDate),
             ]);
-            $name = $tuple->applicant->name;
         }
         $filename = storage_path('app/public/uploads/templates/' . $name);
         $word->saveAs($filename . '.docx');
@@ -305,7 +308,8 @@ class ApplicantController extends Controller
         ];
 
         $headers = [
-            'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            // 'Content-Type' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+            'Content-Type' => 'application/pdf',
         ];
 
         \ConvertApi\ConvertApi::setApiSecret('Z8AyNVOZ8hxKiJY0');
@@ -317,10 +321,17 @@ class ApplicantController extends Controller
             ], 'docx');
         $pdf->saveFiles(storage_path('app/public/uploads/templates/'));        
 
+        // \PhpOffice\PhpWord\Settings::setPdfRendererName(\PhpOffice\PhpWord\Settings::PDF_RENDERER_DOMPDF);
+        // \PhpOffice\PhpWord\Settings::setPdfRendererPath('.');
+
+        // $temp = \PhpOffice\PhpWord\IOFactory::load($filename . '.docx');
+        // $pdf = \PhpOffice\PhpWord\IOFactory::createWriter($temp, 'PDF');
+        // $pdf->save($filename . '.pdf', true);
+
         unlink($filename . '.docx');
+        // unlink(storage_path('app/public/uploads/templates/' . $request->templateId));
 
         return response()->download($filename . '.pdf', date('dmY') . ' - PKWT - ' . $name . '.pdf', $headers)->deleteFileAfterSend(true);
-        // return response()->download($filename . '.docx', date('dmY') . ' - PKWT - ' . $name . '.pdf', $headers)->deleteFileAfterSend(true);
     }
 
     public function previewPDF()

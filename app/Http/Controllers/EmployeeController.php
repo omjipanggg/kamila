@@ -179,7 +179,7 @@ class EmployeeController extends Controller
     public function profile() {
         $context = [
             'title' => 'Profile',
-            'records' => \App\Models\Employee::where('user_id', \Auth::user()->id)->get(),
+            'records' => \App\Models\Employee::where('user_id', \Auth::user()->id)->with(['user', 'gender', 'bloodType'])->get(),
             'menus' => \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get(),
         ];
         return view('pages.employee.profile', $context);

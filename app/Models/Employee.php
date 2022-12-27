@@ -71,5 +71,9 @@ class Employee extends Model
 
     function user() {
         return $this->belongsTo(\App\Models\User::class);
+    }    
+
+    function role() {
+        return $this->hasOneThrough(\App\Models\Roles::class, \App\Models\User::class);
     }
 }

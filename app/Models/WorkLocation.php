@@ -24,4 +24,11 @@ class WorkLocation extends Model
     	'latitude',
     	'longitude',
     ];
+
+    public function employee() {
+        return $this->belongsToMany(\App\Models\Employee::class);
+    }
+    public function contract() {
+        return $this->belongsToMany(\App\Models\GeneratedContract::class);
+    }
 }

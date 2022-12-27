@@ -50,7 +50,7 @@ class User extends Authenticatable
     ];
 
     function role() {
-        return $this->hasOne(\App\Models\Role::class);
+        return $this->belongsTo(\App\Models\Role::class);
     }
 
     function attendance() {
