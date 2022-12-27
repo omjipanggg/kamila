@@ -16,6 +16,8 @@ class Applicant extends Model
     protected $fillable = [
         'id',
     	'id_number',
+        'tax_number',
+        'healthcare_number',
     	'name',
     	'birth_place',
     	'birth_date',
@@ -39,7 +41,6 @@ class Applicant extends Model
     	'ready_to_work',
     	'expected_salary',
     	'expected_facility',
-    	'resume',
         'status',
     ];
 
@@ -48,22 +49,26 @@ class Applicant extends Model
     ];
 
     function status() {
-        return $this->hasOne(\App\Models\ApplicantStat::class);
+        return $this->belongsTo(\App\Models\RecruitmentStatus::class);
     }
 
     function gender() {
-        return $this->hasOne(\App\Models\Gender::class);
+        return $this->belongsTo(\App\Models\Gender::class);
     }
 
     function bloodType() {
-        return $this->hasOne(\App\Models\BloodType::class);
+        return $this->belongsTo(\App\Models\BloodType::class);
     }
 
     function religion() {
-        return $this->hasOne(\App\Models\Religion::class);
+        return $this->belongsTo(\App\Models\Religion::class);
     }
 
-    // function status() {
-    //     return $this->hasOne(\App\Models\ApplicantStat::class);
-    // }
+    function maritalStatus() {
+        return $this->belongsTo(\App\Models\MaritalStatus::class);
+    }
+
+    function proposal() {
+        return $this->belongsToMany(\App\Models\ProposalApplicant::class);
+    }
 }

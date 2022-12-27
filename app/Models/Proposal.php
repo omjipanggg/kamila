@@ -13,25 +13,30 @@ class Proposal extends Model
 
     protected $fillable = [
         'id',
-    	'department_id',
+    	'position_id',
     	'qualification',
     	'description',
     	'permalink',
     	'phone_number',
     	'vendor_id',
     	'published_by',
+        'expire_date',
+        'active',
     ];
 
-    function publishedBy() {
-        return $this->belongsTo(\App\Models\Employee::class);
+    function published() {
+        return $this->hasOne(\App\Models\Employee::class);
     }
 
     function vendor() {
         return $this->belongsTo(\App\Models\Vendor::class);
     }
 
-    function department() {
-        return $this->belongsTo(\App\Models\Department::class);
+    function position() {
+        return $this->belongsTo(\App\Models\Position::class);
     }
 
+    function applicant() {
+        return $this->belongsToMany(\App\Models\ProposalApplicant::class);
+    }
 }

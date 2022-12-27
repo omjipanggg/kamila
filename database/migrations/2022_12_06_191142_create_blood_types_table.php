@@ -19,10 +19,10 @@ class CreateBloodTypesTable extends Migration
             $table->timestamps();
         });
         \DB::table('blood_types')->insert([
-            ['id' => 1, 'name' => 'A', 'created_at' => now(), 'updated_at' => now()],
-            ['id' => 2, 'name' => 'B', 'created_at' => now(), 'updated_at' => now()],
-            ['id' => 3, 'name' => 'AB', 'created_at' => now(), 'updated_at' => now()],
-            ['id' => 4, 'name' => 'O', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'A', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'B', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'AB', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'O', 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 

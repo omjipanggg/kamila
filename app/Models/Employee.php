@@ -16,6 +16,7 @@ class Employee extends Model
         'lead_id',
         'id_number',
         'family_number',
+        'healthcare_number',
         'tax_number',
         'name',
         'gender_id',
@@ -45,30 +46,30 @@ class Employee extends Model
     ];
 
     function gender() {
-        return $this->hasOne(\App\Models\Gender::class);
+        return $this->belongsTo(\App\Models\Gender::class);
     }
 
     function religion() {
-        return $this->hasOne(\App\Models\Religion::class);
+        return $this->belongsTo(\App\Models\Religion::class);
     }
     
     function bloodType() {
-        return $this->hasOne(\App\Models\BloodType::class);
+        return $this->belongsTo(\App\Models\BloodType::class);
     }
     
-    function workLocation() {
-        return $this->hasOne(\App\Models\workLocation::class);
+    function workPlace() {
+        return $this->belongsTo(\App\Models\WorkLocation::class);
     }
     
     function proposal() {
-        return $this->hasMany(\App\Models\Proposal::class);
+        return $this->belongsToMany(\App\Models\Proposal::class);
     }
 
     function department() {
-        return $this->hasOne(\App\Models\Department::class);
+        return $this->belongsTo(\App\Models\Department::class);
     }
 
     function user() {
-        return $this->hasOne(\App\Models\User::class);
+        return $this->belongsTo(\App\Models\User::class);
     }
 }

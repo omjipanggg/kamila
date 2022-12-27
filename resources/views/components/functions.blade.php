@@ -28,6 +28,10 @@ function time_elapsed_string($datetime, $full = false) {
     if (!$full) $string = array_slice($string, 0, 1);
     return $string ? implode(', ', $string) . ' ago' : 'just now';
 }
+function dateFormat($date) {
+    $date = date_create($date);
+    return date_format($date, 'd F Y');
+}
 function greetings() {
     $lead = date('G');
     if ($lead >= 4 && $lead <= 11) { $greetings = 'pagi'; }
@@ -101,5 +105,8 @@ function countDays($start, $end) {
     $days = $end->diff($start)->format('%d');
  
    return trim($months . ' (' . numString($months) . ') bulan, ' . $days . ' (' . numString($days) . ') hari,');
+}
+function getMenu($menu) {
+    return $menu;
 }
 ?>

@@ -20,6 +20,6 @@ class Vendor extends Model
     ];
 
     function proposal() {
-        return $this->belongsTo(\App\Models\Proposal::class);
+        return $this->hasMany(\App\Models\Proposal::class);
     }
 }

@@ -18,6 +18,9 @@ class Position extends Model
     ];
 
     function department() {
-    	return $this->hasOne(\App\Models\Department::class);
+    	return $this->belongsTo(\App\Models\Department::class);
+    }
+    function proposal() {
+        return $this->belongsToMany(\App\Models\Proposal::class);
     }
 }

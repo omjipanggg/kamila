@@ -5,9 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LastEducation extends Model
+class TemplateModel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $table = 'template_models';
+
+    protected $fillable = [
+    	'path',
+    	'uploaded_by'
+    ];
 }

@@ -4,15 +4,6 @@
             <div class="nav">
                 <span class="sb-sidenav-menu-heading mt-4">Manajemen</span>
                 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt harum cumque quibusdam quis fugit iste similique facilis culpa, a atque assumenda, delectus dignissimos maxime laborum sequi sed veniam unde dicta vitae. Animi veritatis voluptas minus expedita voluptatem laborum odio, in sit aspernatur, aperiam. Consectetur, consequuntur non dicta fugiat ipsam! Quis minima impedit aliquam dolor minus beatae ipsam exercitationem alias quae, nostrum corporis eveniet quasi amet in voluptate velit suscipit nam dolore consectetur eaque praesentium porro id facilis quo. Voluptatum rerum provident nam aspernatur ea explicabo possimus. Accusamus autem illum dolore laboriosam, aspernatur eligendi recusandae, veniam aperiam quae vitae enim adipisci assumenda tenetur earum veritatis iste dolor quisquam quam possimus nostrum. Blanditiis sed voluptatem labore maxime sit assumenda dolore corrupti ratione tempore eaque at facere aliquam maiores quas incidunt officiis repellat, similique. Adipisci ex magni iste quisquam nulla enim blanditiis illum, dolore at. Ullam dolore modi nihil reprehenderit voluptates, qui laborum quo tempore soluta odio ducimus corporis ea facilis laudantium, ad vero et aperiam at sunt. Repudiandae quis cum excepturi totam, enim perspiciatis id itaque eos beatae quos laboriosam maxime distinctio rerum doloremque similique impedit quam, error provident optio explicabo illo earum tempora, quaerat eum! Incidunt exercitationem impedit ipsum, dolores dolore.</p>
-
-                @foreach($menus as $menu)
-                <a class="nav-link" href="{{ route($menu->route) }}">
-                    <div class="sb-nav-link-icon"><i class="fas {{ $menu->icon }}"></i></div>
-                    {{ $menu->name }}
-                </a>
-                @endforeach
-                
                 <a class="nav-link" href="{{ route('dashboard.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-house-chimney"></i></div>
                     Dashboard
@@ -24,11 +15,11 @@
                 </a>
                 <div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('dashboard.show', 'applicant') }}">
+                        <a class="nav-link" href="{{ route('dashboard.display', 'applicant') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-address-card"></i></div>
                             Data Pelamar
                         </a>
-                        <a class="nav-link" href="{{ route('dashboard.show', 'proposal') }}">
+                        <a class="nav-link" href="{{ route('dashboard.display', 'proposal') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-scroll"></i></div>
                             Lowongan Kerja
                         </a>
@@ -60,7 +51,7 @@
                         </a>
                         <div class="collapse" id="pagesCollapseOne" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionTwo">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="{{ route('dashboard.show', 'employee') }}">Pribadi</a>
+                                <a class="nav-link" href="{{ route('dashboard.display', 'employee') }}">Pribadi</a>
                                 <a class="nav-link" href="#">Keluarga</a>
                                 <a class="nav-link" href="#">Pendidikan</a>
                                 <a class="nav-link" href="#">Keahlian</a>
@@ -98,11 +89,11 @@
                     </nav>
                 </div>
                 <span class="sb-sidenav-menu-heading">Lain-Lain</span>
-                <a class="nav-link" href="{{ route('dashboard.show', 'vendor') }}">
+                <a class="nav-link" href="{{ route('dashboard.display', 'vendor') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-landmark"></i></div>
                     Vendor
                 </a>
-                <a class="nav-link" href="{{ route('dashboard.show', 'vendor') }}">
+                <a class="nav-link" href="{{ route('dashboard.display', 'vendor') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-screwdriver-wrench"></i></div>
                     Pengaturan
                 </a>

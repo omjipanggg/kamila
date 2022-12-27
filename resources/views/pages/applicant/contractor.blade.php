@@ -12,15 +12,8 @@
 
         <div class="row mb-2">
             <div class="col">
-                <a href="{{ route('applicant.create') }}" class="btn btn-sm btn-color"><i class="fas fa-plus"></i></a>
-                <a href="{{ route('applicant.approval') }}" class="btn btn-sm btn-outline-color">PKWT</a>
+                {{ $selectedTemplate }}
             </div>
-        </div>
-
-        <div class="row">
-        	<div class="col">
-                @include('components.table')
-        	</div>
         </div>
     </div>
 </main>

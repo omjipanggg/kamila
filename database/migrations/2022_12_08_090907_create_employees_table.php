@@ -15,12 +15,13 @@ class CreateEmployeesTable extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             // $table->char('id_fixed', 8)->primary();
+            $table->char('user_id')->index();
             $table->increments('id', 3);
             $table->char('year_id', 4)->default(date('Y'));
             $table->char('lead_id', 1)->default('B');
             $table->char('id_number', 16)->nullable()->unique();
-            $table->char('user_id')->index();
             $table->char('family_number', 16)->nullable();
+            $table->char('healthcare_number', 16)->nullable()->unique();
             $table->char('tax_number', 20)->nullable();
             $table->string('name')->nullable();
             $table->string('birth_place')->nullable();
@@ -44,15 +45,12 @@ class CreateEmployeesTable extends Migration
             $table->foreignId('blood_type_id')->cascadeOnUpdate()->nullable()->constrained();
             $table->string('last_education')->nullable();
             $table->string('picture')->nullable();
-            $table->string('marital_status')->nullable();
-            $table->foreignId('work_location_id')->cascadeOnUpdate()->nullable()->constrained();
-            $table->timestamps();
-        });
-
-        Schema::table('employees', function (Blueprint $table) {
+            $table->foreignId('marital_status_id')->cascadeOnUpdate()->nullable()->constrained('marital_status');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate();
             $table->foreign('position_id')->references('id')->on('positions')->cascadeOnUpdate();    
             $table->foreignId('gender_id')->default(1)->nullable()->cascadeOnUpdate()->constrained();
+            $table->foreignId('work_location_id')->cascadeOnUpdate()->nullable()->constrained();
+            $table->timestamps();
         });
 
         \DB::statement('ALTER TABLE employees CHANGE id id INT(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
@@ -60,7 +58,7 @@ class CreateEmployeesTable extends Migration
         \DB::table('employees')->insert([
             [
                 'lead_id' => 'A',
-                'year_id' => '0222',
+                'year_id' => '02' . date('y'),
                 'id_number' => '3604012907960049',
                 'user_id' => \App\Models\User::all()->pluck('id')->first(),
                 'name' => \App\Models\User::all()->pluck('name')->first(),
@@ -68,6 +66,7 @@ class CreateEmployeesTable extends Migration
                 'position_id' => 1,
                 'join_date' => now(),
                 'expire_date' => now()->addDays(365),
+                'marital_status_id' => 2,
                 'email' => \App\Models\User::all()->pluck('email')->first(),
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateApplicantStatsTable extends Migration
+class CreateRecruitmentStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateApplicantStatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('applicant_stats', function (Blueprint $table) {
+        Schema::create('recruitment_status', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
         });
 
-        \DB::table('applicant_stats')->insert([
+        \DB::table('recruitment_status')->insert([
             ['name' => 'Lamaran terkirim', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Screening', 'created_at' => now(), 'updated_at' => now()],
             ['name' => 'Menunggu', 'created_at' => now(), 'updated_at' => now()],
@@ -36,6 +36,6 @@ class CreateApplicantStatsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('applicant_stats');
+        Schema::dropIfExists('recruitment_status');
     }
 }

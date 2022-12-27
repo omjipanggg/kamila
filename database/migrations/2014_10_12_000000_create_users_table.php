@@ -31,14 +31,35 @@ class CreateUsersTable extends Migration
         });
 
         \DB::table('users')->insert([
-            'id' => substr(\Str::uuid(), 0, 8),
-            'name' => 'Administrator',
-            'role_id' => 1,
-            'email' => 'admin@kamila.com',
-            'password' => '$2y$10$Ke4KhwYXd/3DaxgiUNX7a.pxbXF01hnjVMBomJxF/nDrrEpKg42yK',
-            // 'remember_token' => \Str::random(64),
-            'created_at' => now(),
-            'updated_at' => now()
+            [
+                'id' => 'qcth4q7i',
+                'name' => 'Administrator',
+                'role_id' => 1,
+                'email' => 'admin@kamila.com',
+                'password' => '$2y$10$Ke4KhwYXd/3DaxgiUNX7a.pxbXF01hnjVMBomJxF/nDrrEpKg42yK',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                'id' => 'b8c39bf8',
+                'name' => 'Mawlana Ajie Pamungkas',
+                'role_id' => 3,
+                'email' => 'mawlana@kamila.com',
+                'password' => '$2y$10$QphSdTW2mSvMyWRlRCHhIekInxQU83srlFY/DJAsFUoFedTajHJym',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
+            [
+                // 'id' => substr(\Str::uuid(), 0, 8),
+                // 'remember_token' => \Str::random(64),
+                'id' => 'e1f4a53b',
+                'name' => 'Auliana Maharani Putri',
+                'role_id' => 2,
+                'email' => 'aulia@kamila.com',
+                'password' => '$2y$10$VWeyZncj3DePHoYwtS3VRuepjnw/TqA/WgMmFnnrlGqpSnkutsgFu',
+                'created_at' => now(),
+                'updated_at' => now()
+            ],
         ]);
     }
 

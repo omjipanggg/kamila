@@ -10,16 +10,11 @@
             </div>
         </div>
 
-        <div class="row mb-2">
-            <div class="col">
-                <a href="{{ route('applicant.create') }}" class="btn btn-sm btn-color"><i class="fas fa-plus"></i></a>
-                <a href="{{ route('applicant.approval') }}" class="btn btn-sm btn-outline-color">PKWT</a>
-            </div>
-        </div>
-
         <div class="row">
         	<div class="col">
-                @include('components.table')
+                {{ Form::open(['route' => 'applicant.uploadTemplate', 'files' => true,]) }}
+                @include('pages.applicant.table')
+                {{ Form::close() }}
         	</div>
         </div>
     </div>

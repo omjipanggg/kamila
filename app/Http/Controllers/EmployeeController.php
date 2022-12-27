@@ -175,12 +175,11 @@ class EmployeeController extends Controller
     public function overtime() { return 'OVERTIME!'; }
     public function patrol() { return 'PATROL!'; }
     public function payslip() { return 'PAYSLIP!'; }
-    public function faq() { return 'FAQ!'; }
 
     public function profile() {
         $context = [
             'title' => 'Profile',
-            'records' => \App\Models\Applicant::where('user_id', \Auth::user()->id)->get(),
+            'records' => \App\Models\Employee::where('user_id', \Auth::user()->id)->get(),
             'menus' => \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get(),
         ];
         return view('pages.employee.profile', $context);

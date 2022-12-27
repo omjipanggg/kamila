@@ -8,4 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 class ProposalApplicant extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+    	'applicant_id',
+    	'proposal_id',
+    	'resume',
+    ];
+
+    function applicant() {
+        return $this->belongsTo(\App\Models\Applicant::class);
+    }
+    function proposal() {
+        return $this->belongsTo(\App\Models\Proposal::class);
+    }
+    function vendor() {
+        return $this->hasOneThrough(\App\Models\Vendor::class, \App\Models\Proposal::class);
+    }
+    function position() {
+        return $this->hasOneThrough(\App\Models\Position::class, \App\Models\Proposal::class);
+    }
 }

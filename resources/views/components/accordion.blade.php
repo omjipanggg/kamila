@@ -4,22 +4,30 @@
             <div class="nav">
                 <span class="sb-sidenav-menu-heading mt-3">Manajemen</span>
 
+{{--
                 @foreach($menus as $menu)
 
-                <a class="nav-link" href="{{ route($menu->route) }}">
+                @if($menu->has_param)
+                <a class="nav-link @if($menu->status == 0) disabled @endif" href="{{ route($menu->route, $menu->model) }}" >
+                @else
+                <a class="nav-link @if($menu->status == 0) disabled @endif" href="{{ route($menu->route) }}" >
+                @endif
                     <div class="sb-nav-link-icon"><i class="fas {{ $menu->icon }}"></i></div>
                     {{ $menu->name }}
                 </a>
+
                 @endforeach
-                
+--}}
+                @include('components.functions')
+                {{ getMenu($menus) }}
             </div>
         </div>
-            <form class="d-inline-block form form-inline" action="search" method="POST">
+            {{ Form::open(['route' => 'dashboard.searchVar', 'class' => 'form form-inline d-inline-block']) }}
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="Search" aria-label="Search" aria-describedby="btnNavbarSearch" name="search" />
+                    <input class="form-control" type="text" autocomplete="off" placeholder="Search" aria-label="Search" aria-describedby="btnNavbarSearch" name="search" />
                     <button class="btn btn-color" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
-            </form>
+            {{ Form::close() }}
 
         <div class="sb-sidenav-footer">
             <div class="d-flex align-items-start gap-12">

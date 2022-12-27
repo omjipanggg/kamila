@@ -20,7 +20,7 @@ class DashboardController extends Controller
     {
         $context = [
             'title' => 'Dashboard',
-            'menus' => \App\Models\Menu::where('role_id', '=', Auth::user()->role_id)->get(),
+            'menus' => $this->getMenu(),
             'schedules' => \App\Models\Attendance::all(),
             'done' => \App\Models\UserAttendance::where('user_id', '=', Auth::user()->id)->where('attendance_date', '=', today())->first(),
         ];
@@ -56,6 +56,7 @@ class DashboardController extends Controller
      */
     public function show($id)
     {
+        //
     }
 
     /**
@@ -81,6 +82,15 @@ class DashboardController extends Controller
         //
     }
 
+    public function faq() {
+        $context = [
+            'title' => 'FAQ',
+            'menus' => $this->getMenu(),
+        ];
+
+        return view('pages.dashboard.faq', $context);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -94,13 +104,14 @@ class DashboardController extends Controller
 
     public function display($table)
     {
-        $model = '\\App\\Models\\' . $table;
+        $model = '\\App\\Models\\' . ucfirst($table);
         $context = [
             'title' => ucfirst($table),
             'model' => new $model,
             'records' => $model::all(),
             'columns' => $this->getColNames(new $model),
-            'colTypes' => $this->getColTypes(new $model)
+            'colTypes' => $this->getColTypes(new $model),
+            'menus' => $this->getMenu(),
         ];
         return view('pages.dashboard.show', $context);
     }
@@ -108,6 +119,13 @@ class DashboardController extends Controller
     public function storeBatch(Request $request, $table)
     {
 
+    }
+
+    public function search() {
+    }
+
+    public function searchVar(Request $request) {
+        return $request->all();
     }
 
 }

@@ -16,8 +16,9 @@ class CreateApplicantsTable extends Migration
         Schema::create('applicants', function (Blueprint $table) {
             $table->char('id', 8)->primary();
             $table->char('id_number', 16)->nullable()->unique();
+            $table->char('healthcare_number', 16)->nullable()->unique();
             $table->char('family_number', 16)->nullable();
-            $table->char('tax_number', 20)->nullable();
+            $table->char('tax_number', 20)->nullable()->unique();
             $table->string('name')->nullable();
             $table->string('birth_place')->nullable();
             $table->date('birth_date')->nullable();
@@ -29,9 +30,12 @@ class CreateApplicantsTable extends Migration
             $table->string('current_city')->nullable();
             $table->string('current_province')->nullable();
             $table->char('current_zip_code', 5)->nullable();
+            $table->foreignId('gender_id')->default(1)->nullable()->cascadeOnUpdate()->constrained();
             $table->string('phone_number', 16)->nullable();
             $table->string('email')->unique();
-            $table->char('username', 32)->nullable();
+            $table->char('username', 16)->nullable();
+            $table->foreignId('blood_type_id')->cascadeOnUpdate()->nullable()->constrained();
+            $table->foreignId('religion_id')->cascadeOnUpdate()->nullable()->constrained();
             $table->string('last_education')->nullable();
             $table->string('picture')->nullable();
             $table->string('marital_status')->nullable();
@@ -39,19 +43,14 @@ class CreateApplicantsTable extends Migration
             $table->date('ready_to_work')->nullable();
             $table->integer('expected_salary')->nullable();
             $table->string('expected_facility')->nullable();
-            $table->string('resume')->nullable();
-            $table->tinyInteger('status')->default(1)->nullable();
+            $table->foreignId('status_id')->default(1)->nullable()->cascadeOnUpdate()->constrained('recruitment_status');
             $table->timestamps();
-        });
-        Schema::table('applicants', function (Blueprint $table) {
-            $table->foreignId('gender_id')->default(1)->nullable()->cascadeOnUpdate()->constrained();
-            $table->foreignId('blood_type_id')->cascadeOnUpdate()->nullable()->constrained();
-            $table->foreignId('religion_id')->cascadeOnUpdate()->nullable()->constrained();
         });
 
         \DB::table('applicants')->insert([
             [
-            'id' => substr(\Str::uuid(), 0, 8),
+            // 'id' => substr(\Str::uuid(), 0, 8),
+            'id' => 'HXMEPM8Q',
             'id_number' => '3604400808940013',
             'family_number' => '3603302707010010',
             'name' => 'Mira Aksara Putera',
@@ -71,8 +70,60 @@ class CreateApplicantsTable extends Migration
             'expected_salary' => 7200000,
             'blood_type_id' => 1,
             'religion_id' => 3,
+            'gender_id' => 4,
+            'status_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'id' => 'WQ7FOY3H',
+            'id_number' => '3601922001920001',
+            'family_number' => '3728100204100002',
+            'name' => 'Randi Muhammad Jaya',
+            'birth_place' => 'Bandung',
+            'birth_date' => '1992-01-20',
+            'address_on_id' => 'Jl. Cendrawasih No.131 RT.004/015',
+            'city_on_id' => 'Surabaya',
+            'province_on_id' => 'Jawa Timur',
+            'zip_code_on_id' => '63101',            
+            'current_address' => 'Jl. Cendrawasih No.131 RT.004/015',
+            'current_city' => 'Surabaya',
+            'current_province' => 'Jawa Timur',
+            'current_zip_code' => '63101',
+            'phone_number' => '089512859921',
+            'email' => 'randi@gmail.com',
+            'username' => 'randi',
+            'expected_salary' => 6300000,
+            'blood_type_id' => 3,
+            'religion_id' => 3,
             'gender_id' => 1,
-            'status' => 1,
+            'status_id' => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+            ],
+            [
+            'id' => 'P1F916AR',
+            'id_number' => '3604400105950020',
+            'family_number' => '3603302707010010',
+            'name' => 'Aulia Priatmodjo',
+            'birth_place' => 'Serang',
+            'birth_date' => '1995-05-01',
+            'address_on_id' => 'Komp. Puri Naiga, Blok.A4-01 RT.009/010',
+            'city_on_id' => 'Karawang',
+            'province_on_id' => 'Jawa Barat',
+            'zip_code_on_id' => '12630',            
+            'current_address' => 'Komp. Puri Naiga, Blok.A4-01 RT.009/010',
+            'current_city' => 'Karawang',
+            'current_province' => 'Jawa Barat',
+            'current_zip_code' => '12630',
+            'phone_number' => '081382908420',
+            'email' => 'aulia@gmail.com',
+            'username' => 'auliaaa',
+            'expected_salary' => 5500000,
+            'blood_type_id' => 2,
+            'religion_id' => 3,
+            'gender_id' => 4,
+            'status_id' => 1,
             'created_at' => now(),
             'updated_at' => now(),
             ],
