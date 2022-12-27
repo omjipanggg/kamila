@@ -1,8 +1,4 @@
-<p align="center">
-    <a href="https://laravel.com" target="_blank">
-        <img src="https://raw.githubusercontent.com/omjipanggg/kamila/master/public/img/logo.png" width="400" />
-    </a>
-</p
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/omjipanggg/kamila/master/public/img/logo.png" width="400" loading="lazy"/></a></p>
 
 ## Tentang
 
