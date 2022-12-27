@@ -32,7 +32,7 @@ class CreateUsersTable extends Migration
 
         \DB::table('users')->insert([
             [
-                'id' => 'qcth4q7i',
+                'id' => substr(\Str::uuid(),0,8),
                 'name' => 'Administrator',
                 'role_id' => 1,
                 'email' => 'admin@kamila.com',
@@ -41,7 +41,7 @@ class CreateUsersTable extends Migration
                 'updated_at' => now()
             ],
             [
-                'id' => 'b8c39bf8',
+                'id' => substr(\Str::uuid(),0,8),
                 'name' => 'Mawlana Ajie Pamungkas',
                 'role_id' => 3,
                 'email' => 'mawlana@kamila.com',
@@ -52,8 +52,8 @@ class CreateUsersTable extends Migration
             [
                 // 'id' => substr(\Str::uuid(), 0, 8),
                 // 'remember_token' => \Str::random(64),
-                'id' => 'e1f4a53b',
-                'name' => 'Auliana Maharani Putri',
+                'id' => substr(\Str::uuid(),0,8),
+                'name' => 'Aulia Maharani Putri',
                 'role_id' => 2,
                 'email' => 'aulia@kamila.com',
                 'password' => '$2y$10$VWeyZncj3DePHoYwtS3VRuepjnw/TqA/WgMmFnnrlGqpSnkutsgFu',
