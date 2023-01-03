@@ -5,9 +5,7 @@
 
         <div class="row">
             <div class="col">
-
                 <h1 class="dash mt-3">Dashboard</h1>
-
                 @include('components.breadcrumb')
             </div>
         </div>
@@ -16,7 +14,8 @@
 			<div class="col">
 				{!! form($form) !!}
 			</div>
-		</div>        
+		</div>
+        
     </div>
 </main>
 <div class="big"></div>

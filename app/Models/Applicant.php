@@ -10,39 +10,13 @@ class Applicant extends Model
     use HasFactory;
 
     protected $table = 'applicants';
-    protected $primaryKey = 'id';
-    public $incrementing = false;
 
-    protected $fillable = [
-        'id',
-    	'id_number',
-        'tax_number',
-        'healthcare_number',
-    	'name',
-    	'birth_place',
-    	'birth_date',
-    	'address_on_id',
-    	'city_on_id',
-    	'province_on_id',
-    	'zip_code_on_id',
-    	'current_address',
-    	'current_city',
-    	'current_province',
-    	'current_zip_code',
-    	'phone_number',
-    	'email',
-    	'username',
-    	'religion_id',
-    	'gender_id',
-    	'blood_type_id',
-    	'last_education',
-    	'picture',
-    	'marital_status',
-    	'ready_to_work',
-    	'expected_salary',
-    	'expected_facility',
-        'status',
-    ];
+    public $incrementing = false;
+    
+    protected $primaryKey = 'id';
+    protected $keyType = 'uuid';
+
+    protected $fillable = ['id', 'id_number', 'tax_number', 'healthcare_number', 'family_number', 'name', 'birth_place', 'birth_date', 'address_on_id', 'city_on_id', 'province_on_id', 'zip_code_on_id', 'current_address', 'current_city', 'current_province', 'current_zip_code', 'phone_number', 'email', 'username', 'religion_id', 'gender_id', 'blood_type_id', 'picture', 'marital_status_id', 'registration_date', 'ready_to_work', 'expected_salary', 'expected_facility', 'recruitment_status_id'];
 
     protected $casts = [
         'id' => 'string',

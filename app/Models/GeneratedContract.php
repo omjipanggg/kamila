@@ -9,9 +9,9 @@ class GeneratedContract extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-    	
-    ];
+    protected $table = 'generated_contracts';
+
+    protected $guarded = [];
 
     function workPlace() {
         return $this->belongsTo(\App\Models\WorkLocation::class);

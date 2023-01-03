@@ -4,29 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class RecruitmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-
     public function __construct()
     {
         $this->middleware('auth');
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $context = [
-            'title' => 'Akun Terdaftar',
-            'model' => new \App\Models\User,
-            'records' => \App\Models\User::all(),
-            'columns' => $this->getColNames(new \App\Models\User),
-            'menus' => \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get(),
-        ];
-        return view('pages.user.index', $context);
+        //
     }
 
     /**
@@ -94,4 +86,7 @@ class UserController extends Controller
     {
         //
     }
+
+    public function score($id) {}
+    public function test($id) {}
 }

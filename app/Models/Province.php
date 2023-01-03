@@ -10,5 +10,6 @@ class Province extends Model
     use HasFactory;
 
     protected $table = 'provinces';
-    protected $fillable = ['name'];
+    
+    protected $guarded = [];
 }

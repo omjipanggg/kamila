@@ -16,14 +16,15 @@ class CreateEmployeeStatusTable extends Migration
         Schema::create('employee_status', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::table('employee_status')->insert([
-            ['name' => 'Kontrak', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Tetap', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Tenaga Harian Lepas (THL)', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Magang', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Kontrak'],
+            ['name' => 'Tetap'],
+            ['name' => 'Tenaga Harian Lepas (THL)'],
+            ['name' => 'Magang'],
         ]);
     }
 

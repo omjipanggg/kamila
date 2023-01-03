@@ -11,18 +11,11 @@ class Menu extends Model
 
     protected $table = "menus";
 
-    protected $fillable = [
-    	'name',
-    	'role_id',
-        'icon',
-    	'parent_id',
-    	'has_child',
-    	'model',
-    	'route',
-    ];
+    protected $guarded = [];
 
     protected $casts = [
-    	'has_child' => 'boolean',
+        'has_child' => 'boolean',
+        'has_param' => 'boolean'
     ];
 
     public function child(){

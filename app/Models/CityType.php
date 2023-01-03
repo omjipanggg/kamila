@@ -10,7 +10,6 @@ class CityType extends Model
     use HasFactory;
 
     protected $table = 'city_types';
-    protected $fillable = [
-    	'name'
-    ];
+
+    protected $guarded = [];
 }

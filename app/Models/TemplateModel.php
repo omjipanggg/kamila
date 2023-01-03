@@ -11,8 +11,5 @@ class TemplateModel extends Model
 
     protected $table = 'template_models';
 
-    protected $fillable = [
-    	'path',
-    	'uploaded_by'
-    ];
+    protected $guarded = [];
 }

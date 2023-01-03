@@ -15,37 +15,29 @@ class CreateRolesTable extends Migration
     {
         Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->char('lead_id', 3);
             $table->string('name', 64);
+            $table->foreignId('employee_level_id')->cascadeOnUpdate()->constrained();
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
-        \DB::statement('ALTER TABLE roles CHANGE id id INT(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
 
-        \DB::table('roles')->insert([
-            [
-                'lead_id' => 'ADM',
-                'name' => 'Administrator',
-                'description' => 'Akses akun administrator.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'lead_id' => 'BSC',
-                'name' => 'Basic',
-                'description' => 'Akses akun default atau biasa.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-            [
-                'lead_id' => 'SCR',
-                'name' => 'Security',
-                'description' => 'Akses akun divisi keamanan.',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-        ]);
+        \App\Models\Role::create(
+            ['employee_level_id' => 1,'name' => 'Administrator', 'description' => 'Akses akun administrator.']
+        );
+        \App\Models\Role::create(
+            ['employee_level_id' => 1,'name' => 'Basic', 'description' => 'Akses akun default atau biasa.']
+        );
+        \App\Models\Role::create(
+            ['employee_level_id' => 4,'name' => 'Security', 'description' => 'Akses akun divisi keamanan.']
+        );
+        \App\Models\Role::create(
+            ['employee_level_id' => 2,'name' => 'Supervisor', 'description' => 'Akses akun menu supervisor.']
+        );
+        \App\Models\Role::create(
+            ['employee_level_id' => 3,'name' => 'Manager', 'description' => 'Akses akun menu manager.']
+        );
     }
 
     /**

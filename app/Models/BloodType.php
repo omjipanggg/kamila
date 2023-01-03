@@ -11,9 +11,7 @@ class BloodType extends Model
 
     protected $table = 'blood_types';
 
-    protected $fillable = [
-    	'name',
-    ];
+    protected $guarded = [];
 
     function applicant() {
     	return $this->belongsToMany(\App\Models\Applicant::class);

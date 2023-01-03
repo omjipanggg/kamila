@@ -16,7 +16,8 @@ class CreateBloodTypesTable extends Migration
         Schema::create('blood_types', function (Blueprint $table) {
             $table->id();
             $table->string('name', 2);
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
         \DB::table('blood_types')->insert([
             ['name' => 'A', 'created_at' => now(), 'updated_at' => now()],

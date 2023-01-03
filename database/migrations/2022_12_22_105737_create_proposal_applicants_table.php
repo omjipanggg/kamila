@@ -16,17 +16,30 @@ class CreateProposalApplicantsTable extends Migration
         Schema::create('proposal_applicants', function (Blueprint $table) {
             $table->id();
             $table->foreignId('proposal_id')->cascadeOnUpdate()->constrained();
-            $table->char('applicant_id', 8)->index();
-            $table->foreign('applicant_id')->references('id')->on('applicants')->cascadeOnUpdate();
+            $table->foreignUuid('applicant_id')->cascadeOnUpdate()->constrained();
             $table->string('resume')->nullable();
+            $table->date('date_applied');
             $table->boolean('status')->default(1);
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::table('proposal_applicants')->insert([
-            ['proposal_id' => 1, 'applicant_id' => 'HXMEPM8Q', 'resume' => 'resume.pdf', 'created_at' => now(), 'updated_at' => now()],
-            ['proposal_id' => 2, 'applicant_id' => 'WQ7FOY3H', 'resume' => 'resume.pdf', 'created_at' => now(), 'updated_at' => now()],
-            ['proposal_id' => 3, 'applicant_id' => 'P1F916AR', 'resume' => 'resume.pdf', 'created_at' => now(), 'updated_at' => now()],
+            [ 'proposal_id' => 2,
+              'applicant_id' => \App\Models\Applicant::where('name', 'like', "%Mira%")->pluck('id')->first(),
+              'resume' => 'resume.pdf',
+              'date_applied' => now(),
+            ],
+            [ 'proposal_id' => 3,
+              'applicant_id' => \App\Models\Applicant::where('name', 'like', "%Randi%")->pluck('id')->first(),
+              'resume' => 'resume.pdf',
+              'date_applied' => '2022-09-21',
+            ],
+            [ 'proposal_id' => 1,
+              'applicant_id' => \App\Models\Applicant::where('name', 'like', "%Aulia%")->pluck('id')->first(),
+              'resume' => 'resume.pdf',
+              'date_applied' => now(),
+            ],
         ]);
     }
 

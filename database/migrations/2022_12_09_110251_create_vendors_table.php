@@ -14,31 +14,18 @@ class CreateVendorsTable extends Migration
     public function up()
     {
         Schema::create('vendors', function (Blueprint $table) {
-            $table->char('id', 8)->primary();
+            $table->id();
             $table->string('name');
             $table->string('address')->nullable();
             $table->string('phone_number')->nullable();
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::table('vendors')->insert([
-            [
-            'id' => 'TELKOM01',
-            'name' => 'Telkomsel Inti Maya',
-            'address' => 'Jl. K.H. Burhanudin No.19 RT.004/017, Duren Sawit, Jakarta 16530',
-            'description' => 'Telkomsel.',
-            'created_at' => now(),
-            'updated_at' => now(),
-            ],
-            [
-            'id' => 'BUMN0001',
-            'name' => 'BUMN',
-            'address' => 'Jl. Mawar No.57 RT.001/004, Grogol, Jakarta Barat 16530',
-            'description' => 'BUMN.',
-            'created_at' => now(),
-            'updated_at' => now(),
-            ],
+            [ 'name' => 'Telkomsel Inti Maya', 'address' => 'Jl. K.H. Burhanudin No.19 RT.004/017, Duren Sawit, Jakarta 16530', ],
+            [ 'name' => 'BUMN Sejati Selamanya', 'address' => 'Jl. Mawar No.57 RT.001/004, Grogol, Jakarta Barat 16530', ],
         ]);
     }
 

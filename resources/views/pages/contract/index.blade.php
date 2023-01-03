@@ -12,8 +12,8 @@
 
         <div class="row">
         	<div class="col">
-                {{ Form::open(['route' => 'applicant.uploadTemplate', 'files' => true,]) }}
-                @include('pages.applicant.table')
+                {{ Form::open(['route' => 'contract.upload', 'files' => true,]) }}
+                @include('pages.contract.table')
                 {{ Form::close() }}
         	</div>
         </div>

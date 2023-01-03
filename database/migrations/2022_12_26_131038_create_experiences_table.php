@@ -21,7 +21,8 @@ class CreateExperiencesTable extends Migration
             $table->date('end_date');
             $table->string('city');
             $table->text('job_description')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

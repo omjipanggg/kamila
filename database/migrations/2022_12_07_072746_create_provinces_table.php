@@ -16,7 +16,8 @@ class CreateProvincesTable extends Migration
         Schema::create('provinces', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \App\Models\Province::create(['name' => 'Bali']);
@@ -39,9 +40,9 @@ class CreateProvincesTable extends Migration
         \App\Models\Province::create(['name' => 'Lampung']);
         \App\Models\Province::create(['name' => 'Maluku']);
         \App\Models\Province::create(['name' => 'Maluku Utara']);
-        \App\Models\Province::create(['name' => 'Nanggroe Aceh Darussalam NAD)']);
-        \App\Models\Province::create(['name' => 'Nusa Tenggara Barat NTB)']);
-        \App\Models\Province::create(['name' => 'Nusa Tenggara Timur NTT)']);
+        \App\Models\Province::create(['name' => 'Nanggroe Aceh Darussalam']);
+        \App\Models\Province::create(['name' => 'Nusa Tenggara Barat (NTB)']);
+        \App\Models\Province::create(['name' => 'Nusa Tenggara Timur (NTT)']);
         \App\Models\Province::create(['name' => 'Papua']);
         \App\Models\Province::create(['name' => 'Papua Barat']);
         \App\Models\Province::create(['name' => 'Riau']);

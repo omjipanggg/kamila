@@ -15,11 +15,11 @@ class CreateActivityLogsTable extends Migration
     {
         Schema::create('activity_logs', function (Blueprint $table) {
             $table->id();
-            $table->char('user_id', 8)->index();
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->nullable();
+            $table->foreignUuid('user_id')->cascadeOnUpdate()->constrained();
             $table->text('query')->nullable();
             $table->string('affected_table')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

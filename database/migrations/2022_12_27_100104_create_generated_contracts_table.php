@@ -17,13 +17,15 @@ class CreateGeneratedContractsTable extends Migration
             $table->id();
             $table->foreignId('proposal_applicant_id')->cascadeOnUpdate()->constrained();
             $table->char('contract_id')->unique();
-            $table->char('employee_id')->unique();
+            $table->char('new_employee_id')->unique();
             $table->integer('primary_salary')->unsigned();
             $table->integer('secondary_salary')->unsigned();
             $table->foreignId('work_location_id')->cascadeOnUpdate()->nullable()->constrained();
+            $table->foreignUuid('user_id')->cascadeOnUpdate()->nullable()->constrained();
             $table->date('join_date');
             $table->date('expire_date');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

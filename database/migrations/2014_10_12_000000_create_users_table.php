@@ -16,51 +16,43 @@ class CreateUsersTable extends Migration
     {
         // \DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         Schema::create('users', function (Blueprint $table) {
-            $table->char('id', 8)->primary();
+            $table->uuid('id')->primary();
             $table->string('name')->nullable();
-            $table->integer('role_id')->unsigned();
+            $table->foreignId('role_id')->cascadeOnUpdate()->constrained();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
         
-        Schema::table('users', function (Blueprint $table) {
-            $table->foreign('role_id')->references('id')->on('roles')->cascadeOnUpdate();
-        });
-
-        \DB::table('users')->insert([
+        \App\Models\User::create(
             [
-                'id' => substr(\Str::uuid(),0,8),
                 'name' => 'Administrator',
-                'role_id' => 1,
+                'role_id' => \App\Models\Role::where('name', 'Administrator')->pluck('id')->first(),
                 'email' => 'admin@kamila.com',
                 'password' => '$2y$10$Ke4KhwYXd/3DaxgiUNX7a.pxbXF01hnjVMBomJxF/nDrrEpKg42yK',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
+            ]
+        );
+        \App\Models\User::create(
             [
-                'id' => substr(\Str::uuid(),0,8),
                 'name' => 'Mawlana Ajie Pamungkas',
-                'role_id' => 3,
+                'role_id' => \App\Models\Role::where('name', 'Security')->pluck('id')->first(),
                 'email' => 'mawlana@kamila.com',
                 'password' => '$2y$10$QphSdTW2mSvMyWRlRCHhIekInxQU83srlFY/DJAsFUoFedTajHJym',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
+            ]
+        );
+        \App\Models\User::create(
             [
-                // 'id' => substr(\Str::uuid(), 0, 8),
+                // 'id' => \Str::uuid(),
                 // 'remember_token' => \Str::random(64),
-                'id' => substr(\Str::uuid(),0,8),
                 'name' => 'Aulia Maharani Putri',
-                'role_id' => 2,
+                'role_id' => \App\Models\Role::where('name', 'Basic')->pluck('id')->first(),
                 'email' => 'aulia@kamila.com',
                 'password' => '$2y$10$VWeyZncj3DePHoYwtS3VRuepjnw/TqA/WgMmFnnrlGqpSnkutsgFu',
-                'created_at' => now(),
-                'updated_at' => now()
-            ],
-        ]);
+            ]
+        );
     }
 
     /**

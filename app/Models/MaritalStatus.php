@@ -11,7 +11,7 @@ class MaritalStatus extends Model
 
     protected $table = 'marital_status';
 
-    protected $fillable = ['name'];
+    protected $guarded = [];
 
     function applicant() {
     	return $this->belongsToMany(\App\Models\Applicant::class);

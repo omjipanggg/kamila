@@ -11,7 +11,7 @@ class ApplicantStatus extends Model
 
     protected $table = 'applicant_status';
 
-    protected $fillable = ['name'];
+    protected $guarded = [];
 
     function applicant() {
     	return $this->belongsTo(\App\Models\Applicant::class);

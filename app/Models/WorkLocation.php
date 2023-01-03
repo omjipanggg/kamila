@@ -11,19 +11,7 @@ class WorkLocation extends Model
 
     protected $table = 'work_locations';
 
-    protected $fillable = [
-    	'name',
-    	'street',
-    	'erte',
-    	'erwe',
-    	'district',
-    	'state',
-    	'city',
-        'province',
-    	'zipcode',
-    	'latitude',
-    	'longitude',
-    ];
+    protected $guarded = [];
 
     public function employee() {
         return $this->belongsToMany(\App\Models\Employee::class);

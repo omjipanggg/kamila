@@ -16,16 +16,16 @@ class CreateRecruitmentStatusTable extends Migration
         Schema::create('recruitment_status', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::table('recruitment_status')->insert([
-            ['name' => 'Lamaran terkirim', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Screening', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Menunggu', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Interview', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Offering', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Selesai', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Lamaran terkirim'],
+            ['name' => 'Screening'],
+            ['name' => 'Interview'],
+            ['name' => 'Offering'],
+            ['name' => 'Selesai'],
         ]);
     }
 

@@ -11,11 +11,7 @@ class Role extends Model
 
     protected $table = 'roles';
 
-    protected $fillable = [
-    	'id',
-    	'name',
-    	'description',
-    ];
+    protected $guarded = [];
 
     function user() {
     	return $this->belongsToMany(\App\Models\User::class);

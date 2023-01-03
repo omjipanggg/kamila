@@ -18,10 +18,11 @@ class CreateDepartmentsTable extends Migration
             $table->char('lead_id', 3);
             $table->string('name');
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
-        \DB::statement('ALTER TABLE departments CHANGE id id INT(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
+        // \DB::statement('ALTER TABLE departments CHANGE id id INT(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
 
         \DB::table('departments')->insert([
             [

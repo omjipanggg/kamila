@@ -16,15 +16,16 @@ class CreateReligionsTable extends Migration
         Schema::create('religions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::table('religions')->insert([
-            ['name' => 'Budha', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Hindu', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Islam', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Katolik', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Kong-Hu-Chu', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Budha'],
+            ['name' => 'Hindu'],
+            ['name' => 'Islam'],
+            ['name' => 'Katolik'],
+            ['name' => 'Kong-Hu-Chu'],
         ]);
     }
 

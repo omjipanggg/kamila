@@ -13,7 +13,7 @@
         <div class="row mb-2">
             <div class="col">
                 <a href="{{ route('applicant.create') }}" class="btn btn-sm btn-color"><i class="fas fa-plus"></i></a>
-                <a href="{{ route('applicant.approval') }}" class="btn btn-sm btn-outline-color">PKWT</a>
+                <a href="{{ route('applicant.pkwt') }}" class="btn btn-sm btn-outline-color">PKWT</a>
             </div>
         </div>
 

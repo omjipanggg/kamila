@@ -11,7 +11,7 @@ class Gender extends Model
 
     protected $table = 'genders';
 
-    protected $fillable = ['name'];
+    protected $guarded = [];
 
     function applicant() {
     	return $this->belongsToMany(\App\Models\Applicant::class);

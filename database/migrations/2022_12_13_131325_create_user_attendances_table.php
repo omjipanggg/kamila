@@ -15,9 +15,8 @@ class CreateUserAttendancesTable extends Migration
     {
         Schema::create('user_attendances', function (Blueprint $table) {
             $table->id();
-            $table->char('user_id', 8)->index();
             $table->integer('attendance_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate()->nullable();
+            $table->foreignUuid('user_id')->cascadeOnUpdate()->constrained();
             $table->foreign('attendance_id')->references('id')->on('attendances')->cascadeOnUpdate()->nullable();
             $table->date('attendance_date');
             $table->string('task_done')->nullable();
@@ -32,7 +31,8 @@ class CreateUserAttendancesTable extends Migration
             $table->double('off_longitude')->nullable();
             $table->double('off_distance')->nullable();
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
     }
     /**

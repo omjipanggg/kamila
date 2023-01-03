@@ -19,7 +19,8 @@ class CreateCitiesTable extends Migration
             $table->foreignId('city_type_id')->cascadeOnUpdate()->constrained();
             $table->string('name');
             $table->char('zip_code', 5);
-            // $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
         \DB::insert(\DB::raw("insert INTO `cities` 
         (`id`, `province_id`, `city_type_id`, `name`, `zip_code`)

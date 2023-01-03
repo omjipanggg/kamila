@@ -11,11 +11,7 @@ class Position extends Model
 
     protected $table = 'positions';
 
-    protected $fillable = [
-    	'name',
-    	'department_id',
-    	'description',
-    ];
+    protected $guarded = [];
 
     function department() {
     	return $this->belongsTo(\App\Models\Department::class);

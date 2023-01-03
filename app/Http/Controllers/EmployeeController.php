@@ -22,7 +22,7 @@ class EmployeeController extends Controller
 
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -42,7 +42,7 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function on_duty(Request $request)
+    public function arrive(Request $request)
     {
         // $img = $request->image;
         // $folderPath = "uploads/attendances/";
@@ -79,12 +79,10 @@ class EmployeeController extends Controller
         ]);
 
         $attendance ? $msg = 'Berhasil melakukan presensi masuk.' : $msg = 'Terjadi kesalahan.';
-        return redirect()->route('dashboard.index')->with('status', $msg);
-
-        // dd($request->all());
+        return back()->with('status', $msg);
     }
 
-    public function off_duty(Request $request)
+    public function leave(Request $request)
     {
         $request->validate([
             'task_done' => 'required',
@@ -144,7 +142,11 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        $request->validate([
+            
+        ]);
+        $employee->update($request->all());
+        return redirect()->route('dashboard.index')->with('status', 'Berhasil menyunting karyawan.');
     }
 
     /**
@@ -155,22 +157,24 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+        return redirect()->route('dashboard.index', 'refresh')->with('status', 'Karyawan berhasil dihapus.');
     }
+
     public function ring()
     {
-        // $ip_address = \Request::ip();
-        $ip_address = '180.243.8.111';
+        $ip_address = \Request::ip();
+        // $ip_address = '180.243.8.111';
         $context = [
             'title' => 'Attendance',
             'geo' => \Location::get($ip_address),
             'schedules' => \App\Models\Attendance::all(),
             'done' => \App\Models\UserAttendance::where('user_id', '=', Auth::user()->id)->where('attendance_date', '=', today())->first(),
-            'menus' => \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get(),
+            'menus' => $this->getMenu(),
         ];
         return view('pages.employee.index', $context);
     }
-    public function attendance() { return 'ATTENDANCE!'; }
+
     public function permit() { return 'PERMIT!'; }
     public function overtime() { return 'OVERTIME!'; }
     public function patrol() { return 'PATROL!'; }
@@ -180,7 +184,7 @@ class EmployeeController extends Controller
         $context = [
             'title' => 'Profile',
             'records' => \App\Models\Employee::where('user_id', \Auth::user()->id)->with(['user', 'gender', 'bloodType'])->get(),
-            'menus' => \App\Models\Menu::where('role_id', '=', \Auth::user()->role_id)->get(),
+            'menus' => $this->getMenu(),
         ];
         return view('pages.employee.profile', $context);
     }

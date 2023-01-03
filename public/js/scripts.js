@@ -57,11 +57,11 @@ function showChar(event) {
 }
 
 function ckChange(ckType){
-    var ckName = document.getElementsByName(ckType.name);
-    var checked = document.getElementById(ckType.id);
+    let ckName = document.getElementsByName(ckType.name);
+    let checked = document.getElementById(ckType.id);
 
     if (checked.checked) {
-      for(var i=0; i < ckName.length; i++){
+      for(let i=0; i < ckName.length; i++){
 
           if(!ckName[i].checked){
               ckName[i].disabled = true;
@@ -71,7 +71,7 @@ function ckChange(ckType){
       } 
     }
     else {
-      for(var i=0; i < ckName.length; i++){
+      for(let i=0; i < ckName.length; i++){
         ckName[i].disabled = false;
       } 
     }    
@@ -96,7 +96,8 @@ window.addEventListener('DOMContentLoaded', (event) => {
                     previous: '<i class="fas fa-caret-left"></i>',
                     next: '<i class="fas fa-caret-right"></i>'
                 }
-            }
+            },
+            orderCellsTop: true
         });
     }
     if (document.body.querySelector('#camHolder')) {
@@ -191,7 +192,7 @@ if (document.body.querySelector('#map')) {
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/streets-v12',
-        zoom: 11,
+        zoom: 12,
         preloadOnly: true,
         animate: false,
         center: [106.919428, -6.24653821],
@@ -230,4 +231,47 @@ if (document.body.querySelector('#map')) {
     const marker = new mapboxgl.Marker({
         color: '#28375C',
     }).setLngLat([106.919428, -6.24653821]).addTo(map);
+}
+
+// AJAX ==================================================================================== //
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+let modalControl = document.getElementById('modalControl');
+if (modalControl) {
+    modalControl.addEventListener('show.bs.modal', function (event) {
+        let btn = event.relatedTarget;
+        
+        let route = btn.getAttribute('data-bs-route');
+        let table = btn.getAttribute('data-bs-table');
+        let type = btn.getAttribute('data-bs-type');
+
+        modalControl.querySelector('.modal-title').textContent = table + ' • ' + type;
+
+        $.ajax({
+            url: route,
+            async: true,
+            beforeSend: () => {},
+            success: (result) => {
+                $('#modalControlPlaceholders').html(result);
+            },
+            complete: () => {},
+            timeout: 4800
+        });
+    });
+}
+
+let modadel = document.getElementById('modadel');
+if (modadel) {
+    modadel.addEventListener('show.bs.modal', function (event) {
+        let btn = event.relatedTarget;
+
+        let route = btn.getAttribute('data-bs-route');
+        let type = btn.getAttribute('data-bs-type');
+        
+        document.querySelector('#formDel').action = route;
+    });
 }

@@ -9,5 +9,7 @@ class Education extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name'];
+    protected $table = 'education';
+
+    protected $guarded = [];
 }

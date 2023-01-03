@@ -19,7 +19,8 @@ class CreateAttendancesTable extends Migration
             $table->time('on_duty');
             $table->time('off_duty');
             $table->string('description')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::statement('ALTER TABLE attendances CHANGE id id INT(4) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
@@ -28,7 +29,7 @@ class CreateAttendancesTable extends Migration
             [
                 'name' => 'Office Hour I (07:00 - 16:00)',
                 'on_duty' => '07:00',
-                'off_duty' => '17:00',
+                'off_duty' => '16:00',
                 'description' => NULL,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -42,7 +43,7 @@ class CreateAttendancesTable extends Migration
             ],[
                 'name' => 'Shift I (07:00 - 13:00)',
                 'on_duty' => '07:00',
-                'off_duty' => '14:00',
+                'off_duty' => '13:00',
                 'description' => NULL,
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -51,6 +52,20 @@ class CreateAttendancesTable extends Migration
                 'on_duty' => '14:00',
                 'off_duty' => '20:00',
                 'description' => NULL,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],[
+                'name' => 'WFH I (07:00 - 16:00)',
+                'on_duty' => '07:00',
+                'off_duty' => '16:00',
+                'description' => 'Work from home.',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],[
+                'name' => 'WFH II (08:00 - 17:00)',
+                'on_duty' => '08:00',
+                'off_duty' => '17:00',
+                'description' => 'Work from home.',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

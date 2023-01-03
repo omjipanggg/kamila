@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEducationTable extends Migration
+class CreateEducationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,8 +15,9 @@ class CreateEducationTable extends Migration
     {
         Schema::create('education', function (Blueprint $table) {
             $table->id();
-            $table->char('name', 3);
-            $table->timestamps();
+            $table->string('name');
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \App\Models\Education::create(['name' => 'S3']);
@@ -30,6 +31,7 @@ class CreateEducationTable extends Migration
         \App\Models\Education::create(['name' => 'SMK']);
         \App\Models\Education::create(['name' => 'SMP']);
         \App\Models\Education::create(['name' => 'SD']);
+        \App\Models\Education::create(['name' => 'Tidak ada']);
     }
 
     /**

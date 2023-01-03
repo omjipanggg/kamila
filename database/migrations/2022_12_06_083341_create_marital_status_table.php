@@ -15,14 +15,15 @@ class CreateMaritalStatusTable extends Migration
     {
         Schema::create('marital_status', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 16);
-            $table->timestamps();
+            $table->string('name');
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::table('marital_status')->insert([
-            ['name' => 'Lajang', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Menikah', 'created_at' => now(), 'updated_at' => now()],
-            ['name' => 'Bercerai', 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Lajang',],
+            ['name' => 'Menikah',],
+            ['name' => 'Bercerai',],
         ]);
     }
 

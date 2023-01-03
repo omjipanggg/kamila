@@ -16,7 +16,8 @@ class CreateEmployeeBracketsTable extends Migration
         Schema::create('employee_brackets', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \App\Models\EmployeeBracket::create(['name' => 'Business Project']);

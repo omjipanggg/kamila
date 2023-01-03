@@ -16,12 +16,13 @@ class CreateGendersTable extends Migration
         Schema::create('genders', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::table('genders')->insert([
-            ['id' => 1, 'name' => 'Laki-laki', 'created_at' => now(), 'updated_at' => now()],
-            ['id' => 4, 'name' => 'Perempuan', 'created_at' => now(), 'updated_at' => now()]
+            ['id' => 1, 'name' => 'Laki-laki'],
+            ['id' => 4, 'name' => 'Perempuan']
         ]);
     }
 

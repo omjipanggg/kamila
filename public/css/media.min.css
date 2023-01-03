@@ -4,6 +4,9 @@
 		position: relative;
 		margin-bottom: .5rem;
 	}
+	.navbar-brand {
+		margin-right: 0;
+	}
 	.dropdown-menu[data-bs-popper] {
 		left: 0;
 		right: unset;
@@ -16,5 +19,7 @@
 @media all and (max-width: 767.98px) {
 }
 @media all and (max-width: 575.98px) {
-    
+    .w-72 {
+    	width: 100%;
+    }
 }

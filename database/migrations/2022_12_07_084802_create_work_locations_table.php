@@ -26,7 +26,8 @@ class CreateWorkLocationsTable extends Migration
             $table->char('zipcode', 5)->nullable();
             $table->string('latitude')->nullable();
             $table->string('longitude')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::table('work_locations')->insert([

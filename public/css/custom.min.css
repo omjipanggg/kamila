@@ -9,7 +9,7 @@
 	--primary-darker-color: hsla(223deg, 35%, 22%, 1);
 	--primary-muted-color: hsla(223deg, 100%, 95%, 1);
 	--primary-bright-color: hsla(223deg, 10%, 95%, 1);
-	--secondary-color: hsla(223deg, 41%, 52%, 1);
+	--secondary-color: hsla(223deg, 51%, 27%, 1);
 	--selection-color: hsla(223deg, 73%, 49%, .6);
 	--outline-color: hsla(323deg, 60%, 49%, .6);
 }
@@ -27,7 +27,7 @@
     color: var(--primary-muted-color);
 }
 ::-webkit-scrollbar {
-    width: .25rem;
+    width: .5rem;
     background-color: var(--secondary-color);
 }
 ::-webkit-scrollbar-thumb {
@@ -250,6 +250,13 @@ img.front-logo-reg {
 .sb-sidenav .form-control,
 .sb-sidenav .btn {
 	border-radius: 0;
+}
+.w-72 {
+	width: 72px;
+}
+.form-floating-group > .form-control {
+	border-bottom-left-radius: 0!important;
+	border-top-left-radius: 0!important;
 }
 
 /* LAYOUT ================================================================ */

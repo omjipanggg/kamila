@@ -11,12 +11,10 @@ class Vendor extends Model
 
     protected $table = 'vendors';
 
-    protected $fillable = [
-    	'id',
-    	'name',
-    	'address',
-        'phone_number',
-    	'description',
+    protected $guarded = [];
+
+    protected $casts = [
+        'id' => 'string',
     ];
 
     function proposal() {

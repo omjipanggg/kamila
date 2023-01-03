@@ -37,15 +37,12 @@ class CreateTestScoresTable extends Migration
             $table->tinyInteger('suitability')->nullable()->unsigned();
             $table->text('notes')->nullable();
 
-            $table->integer('interviewer1')->unsigned();
-            $table->integer('interviewer2')->unsigned();
-            $table->integer('interviewer3')->unsigned();
+            $table->foreignId('interviewer1_id')->nullable()->cascadeOnUpdate()->constrained('employees');
+            $table->foreignId('interviewer2_id')->nullable()->cascadeOnUpdate()->constrained('employees');
+            $table->foreignId('interviewer3_id')->nullable()->cascadeOnUpdate()->constrained('employees');
 
-            $table->foreign('interviewer1')->references('id')->on('employees')->nullable()->cascadeOnUpdate();
-            $table->foreign('interviewer2')->references('id')->on('employees')->nullable()->cascadeOnUpdate();
-            $table->foreign('interviewer3')->references('id')->on('employees')->nullable()->cascadeOnUpdate();
-
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

@@ -32,15 +32,20 @@ class InsertForm extends Form
                     $type = 'text';
                 break;
             }
-           
-           if ($this->isForeign($table, $value)) {
+
+            if ($this->isForeign($table, $value)) {
+                $childModel = '\\App\\Models\\';
+                if ($value === 'published_by') {
+                    $childModel = new \App\Models\User;
+                } else {
+                    $childModel .= \Str::studly(\Str::singular(str_replace('_id', '', $value)));
+                }
                 $this->add($value, 'select', [
                     'label' => $value,
-                    'choices' => $this->getData($value),
+                    'choices' => $childModel::pluck('name', 'id')->toArray(),
                     'empty_value' => '——Pilih satu——',
                     'attr' => [
-                        'placeholder' => $value,
-                        'class' => 'form-control form-control-sm',
+                        'class' => 'form-control',
                     ],
                 ]);
             } else {
@@ -48,18 +53,21 @@ class InsertForm extends Form
                     $this->add($value, 'file', [
                         'label' => $value,
                         'attr' => [
-                            'class' => 'form-control form-control-sm',
+                            'class' => 'form-control',
                         ],
                     ]);
-                } 
+                }
                 else if ($value == 'id') {}
                 else if ($value == 'status') {}
+                else if ($value == 'created_at') {}
+                else if ($value == 'updated_at') {}
                 else {                
                     $this->add($value, $type, [
                         'label' => $value,
                         'attr' => [
-                            'class' => 'form-control form-control-sm',
+                            'class' => 'form-control',
                             'autocomplete' => 'off',
+                            'rows' => 6,
                         ],
                     ]);
                 }
@@ -67,16 +75,25 @@ class InsertForm extends Form
         }
         $this->add('save&nbsp;&nbsp;<i class="fas fa-floppy-disk"></i>', 'submit',
             ['attr' => [
-                'class' => 'btn btn-sm btn-color my-2',
+                'class' => 'btn btn-color mt-3 w-100',
             ],
         ]);
     }
 
-    public function isForeign(string $table, string $column)
-    {
+    public function isForeign($table, $column) {
         $columns = \Schema::getConnection()->getDoctrineSchemaManager()->listTableForeignKeys($table);
         return collect($columns)->map(function ($item) {
             return $item->getColumns();
         })->flatten()->contains($column);
+    }
+
+    public function uniqueMulti($array) {
+        $uniqueArray = array();
+        foreach($array as $sub) {
+            if (!in_array($sub, $uniqueArray)) {
+                $uniqueArray[] = $sub;
+            }
+        }
+        return $uniqueArray;
     }
 }

@@ -14,9 +14,8 @@ class CreateEmployeesTable extends Migration
     public function up()
     {
         Schema::create('employees', function (Blueprint $table) {
-            // $table->char('id_fixed', 8)->primary();
-            $table->char('user_id')->index();
-            $table->increments('id', 3);
+            $table->foreignUuid('user_id')->cascadeOnUpdate()->constrained();
+            $table->id();
             $table->char('year_id', 4)->default(date('Y'));
             $table->char('lead_id', 1)->default('B');
             $table->char('id_number', 16)->nullable()->unique();
@@ -26,7 +25,6 @@ class CreateEmployeesTable extends Migration
             $table->string('name')->nullable();
             $table->string('birth_place')->nullable();
             $table->date('birth_date')->nullable();
-            $table->integer('position_id')->nullable()->unsigned();
             $table->date('join_date')->nullable();
             $table->date('expire_date')->nullable();
             $table->integer('salary')->nullable();
@@ -43,17 +41,16 @@ class CreateEmployeesTable extends Migration
             $table->char('username', 32)->nullable();
             $table->foreignId('religion_id')->cascadeOnUpdate()->nullable()->constrained();
             $table->foreignId('blood_type_id')->cascadeOnUpdate()->nullable()->constrained();
-            $table->string('last_education')->nullable();
             $table->string('picture')->nullable();
             $table->foreignId('marital_status_id')->cascadeOnUpdate()->nullable()->constrained('marital_status');
-            $table->foreign('user_id')->references('id')->on('users')->cascadeOnUpdate();
-            $table->foreign('position_id')->references('id')->on('positions')->cascadeOnUpdate();    
+            $table->foreignId('position_id')->cascadeOnUpdate()->nullable()->constrained();
             $table->foreignId('gender_id')->default(1)->nullable()->cascadeOnUpdate()->constrained();
             $table->foreignId('work_location_id')->cascadeOnUpdate()->nullable()->constrained();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
-        \DB::statement('ALTER TABLE employees CHANGE id id INT(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
+        // \DB::statement('ALTER TABLE employees CHANGE id id BIGINT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT');
 
         \DB::table('employees')->insert([
             [
@@ -68,8 +65,6 @@ class CreateEmployeesTable extends Migration
                 'expire_date' => now()->addDays(365),
                 'marital_status_id' => 2,
                 'email' => \App\Models\User::where('name', 'Administrator')->pluck('email')->first(),
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
                 'lead_id' => 'B',
@@ -83,11 +78,9 @@ class CreateEmployeesTable extends Migration
                 'expire_date' => now()->addDays(124),
                 'marital_status_id' => 2,
                 'email' => \App\Models\User::where('name', 'Mawlana Ajie Pamungkas')->pluck('email')->first(),
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
             [
-                'lead_id' => 'A',
+                'lead_id' => 'B',
                 'year_id' => '02' . date('y'),
                 'id_number' => '3602701205940020',
                 'user_id' => \App\Models\User::where('name', 'Aulia Maharani Putri')->pluck('id')->first(),
@@ -98,8 +91,6 @@ class CreateEmployeesTable extends Migration
                 'expire_date' => now()->addDays(94),
                 'marital_status_id' => 1,
                 'email' => \App\Models\User::where('name', 'Aulia Maharani Putri')->pluck('email')->first(),
-                'created_at' => now(),
-                'updated_at' => now(),
             ],
         ]);
     }

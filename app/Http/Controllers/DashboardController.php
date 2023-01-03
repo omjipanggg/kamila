@@ -9,7 +9,7 @@ class DashboardController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'check', 'verified']);
+        $this->middleware(['auth', 'check']);
     }
     /**
      * Display a listing of the resource.
@@ -21,8 +21,7 @@ class DashboardController extends Controller
         $context = [
             'title' => 'Dashboard',
             'menus' => $this->getMenu(),
-            'schedules' => \App\Models\Attendance::all(),
-            'done' => \App\Models\UserAttendance::where('user_id', '=', Auth::user()->id)->where('attendance_date', '=', today())->first(),
+            'done' => \App\Models\UserAttendance::orderBy('created_at')->where('user_id', '=', Auth::user()->id)->where('attendance_date', '=', today())->first(),
         ];
         return view('pages.dashboard.index', $context);
     }
@@ -32,9 +31,22 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($table, \Kris\LaravelFormBuilder\FormBuilder $builder)
     {
-        //
+        $model = '\\App\\Models\\' . $table;
+        $form = $builder->create(\App\Forms\InsertForm::class, [
+            'method' => 'POST',
+            'url' => route('dashboard.store', $table),
+            'model' => new $model,
+        ]);
+
+        $context = [
+            'title' => $table,
+            'form' => $form,
+            'menus' => $this->getMenu(),
+        ];
+
+        return view('pages.dashboard.create', $context);
     }
 
     /**
@@ -43,9 +55,14 @@ class DashboardController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $table)
     {
-        //
+        $prefix = '\\App\\Models\\';
+        $model = $prefix . $table;
+        $store = $model::create($request->all());
+        $store->save();
+
+        return back()->with('status', '['. $table .'] berhasil ditambahkan.');
     }
 
     /**
@@ -65,9 +82,20 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($table, $id, \Kris\LaravelFormBuilder\FormBuilder $builder)
     {
-        //
+        $model = '\\App\\Models\\' . $table;
+        $form = $builder->create(\App\Forms\EditForm::class, [
+            'method' => 'POST',
+            'url' => route('dashboard.update', [$table, $id]),
+            'model' => new $model,
+            'data' => [
+                'records' => $model::where('id', $id)->get(),
+            ],
+        ]);
+
+        $context = ['form' => $form];
+        return view('pages.dashboard.edit', $context);
     }
 
     /**
@@ -77,9 +105,16 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $table)
     {
-        //
+        $model = '\\App\\Models\\' . $table;
+        $result = $model::updateOrCreate(['id' => $request->id], $request->all());
+
+        return redirect()->route('dashboard.display', $table)->with('status', 'Berhasil menyunting data.');
+    }
+
+    public function search(Request $request) {
+        return $request->all();
     }
 
     public function faq() {
@@ -91,41 +126,32 @@ class DashboardController extends Controller
         return view('pages.dashboard.faq', $context);
     }
 
+    public function display($table)
+    {
+        $model = '\\App\\Models\\' . ucfirst($table);
+
+        $context = [
+            'title' => ucwords($table),
+            'model' => new $model,
+            // LOOK FOR HOW TO SELECT WITHOUT ID AND/OR ANY SENSITIVE DATA
+            'records' => $model::orderBy('id')->get(),
+            'columns' => $this->getColNames(new $model),
+            'colTypes' => $this->getColTypes(new $model),
+            'menus' => $this->getMenu(),
+        ];
+        return view('pages.dashboard.display', $context);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($table, $id)
     {
-        //
+        $model = '\\App\\Models\\' . $table;
+        $model::destroy($id);
+        return back()->with('status', 'Data berhasil dihapus.');   
     }
-
-    public function display($table)
-    {
-        $model = '\\App\\Models\\' . ucfirst($table);
-        $context = [
-            'title' => ucfirst($table),
-            'model' => new $model,
-            'records' => $model::all(),
-            'columns' => $this->getColNames(new $model),
-            'colTypes' => $this->getColTypes(new $model),
-            'menus' => $this->getMenu(),
-        ];
-        return view('pages.dashboard.show', $context);
-    }
-
-    public function storeBatch(Request $request, $table)
-    {
-
-    }
-
-    public function search() {
-    }
-
-    public function searchVar(Request $request) {
-        return $request->all();
-    }
-
 }

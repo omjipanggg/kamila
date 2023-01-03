@@ -15,10 +15,10 @@ class CreateTemplateModelsTable extends Migration
     {
         Schema::create('template_models', function (Blueprint $table) {
             $table->id();
-            $table->string('path');
-            $table->char('uploaded_by')->index();
-            $table->foreign('uploaded_by')->references('id')->on('users')->cascadeOnUpdate();
-            $table->timestamps();
+            $table->string('name');
+            $table->foreignUuid('published_by')->cascadeOnUpdate()->constrained('users');
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

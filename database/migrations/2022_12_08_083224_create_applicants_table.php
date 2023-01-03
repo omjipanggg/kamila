@@ -14,11 +14,11 @@ class CreateApplicantsTable extends Migration
     public function up()
     {
         Schema::create('applicants', function (Blueprint $table) {
-            $table->char('id', 8)->primary();
+            $table->uuid('id')->primary();
             $table->char('id_number', 16)->nullable()->unique();
+            $table->char('tax_number', 20)->nullable()->unique();
             $table->char('healthcare_number', 16)->nullable()->unique();
             $table->char('family_number', 16)->nullable();
-            $table->char('tax_number', 20)->nullable()->unique();
             $table->string('name')->nullable();
             $table->string('birth_place')->nullable();
             $table->date('birth_date')->nullable();
@@ -36,21 +36,20 @@ class CreateApplicantsTable extends Migration
             $table->char('username', 16)->nullable();
             $table->foreignId('blood_type_id')->cascadeOnUpdate()->nullable()->constrained();
             $table->foreignId('religion_id')->cascadeOnUpdate()->nullable()->constrained();
-            $table->string('last_education')->nullable();
             $table->string('picture')->nullable();
-            $table->string('marital_status')->nullable();
+            $table->foreignId('marital_status_id')->cascadeOnUpdate()->nullable()->constrained('marital_status');
             $table->date('registration_date')->nullable();
             $table->date('ready_to_work')->nullable();
             $table->integer('expected_salary')->nullable();
             $table->string('expected_facility')->nullable();
-            $table->foreignId('status_id')->default(1)->nullable()->cascadeOnUpdate()->constrained('recruitment_status');
-            $table->timestamps();
+            $table->foreignId('recruitment_status_id')->default(1)->nullable()->cascadeOnUpdate()->constrained('recruitment_status');
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
 
         \DB::table('applicants')->insert([
             [
-            // 'id' => substr(\Str::uuid(), 0, 8),
-            'id' => 'HXMEPM8Q',
+            'id' => \Str::uuid(),
             'id_number' => '3604400808940013',
             'family_number' => '3603302707010010',
             'name' => 'Mira Aksara Putera',
@@ -71,12 +70,10 @@ class CreateApplicantsTable extends Migration
             'blood_type_id' => 1,
             'religion_id' => 3,
             'gender_id' => 4,
-            'status_id' => 1,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'recruitment_status_id' => 1
             ],
             [
-            'id' => 'WQ7FOY3H',
+            'id' => \Str::uuid(),
             'id_number' => '3601922001920001',
             'family_number' => '3728100204100002',
             'name' => 'Randi Muhammad Jaya',
@@ -97,12 +94,10 @@ class CreateApplicantsTable extends Migration
             'blood_type_id' => 3,
             'religion_id' => 3,
             'gender_id' => 1,
-            'status_id' => 1,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'recruitment_status_id' => 1
             ],
             [
-            'id' => 'P1F916AR',
+            'id' => \Str::uuid(),
             'id_number' => '3604400105950020',
             'family_number' => '3603302707010010',
             'name' => 'Aulia Priatmodjo',
@@ -123,10 +118,8 @@ class CreateApplicantsTable extends Migration
             'blood_type_id' => 2,
             'religion_id' => 3,
             'gender_id' => 4,
-            'status_id' => 1,
-            'created_at' => now(),
-            'updated_at' => now(),
-            ],
+            'recruitment_status_id' => 1
+            ]
         ]);
     }
 

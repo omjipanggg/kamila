@@ -9,11 +9,7 @@ class ProposalApplicant extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-    	'applicant_id',
-    	'proposal_id',
-    	'resume',
-    ];
+    protected $guarded = [];
 
     function applicant() {
         return $this->belongsTo(\App\Models\Applicant::class);

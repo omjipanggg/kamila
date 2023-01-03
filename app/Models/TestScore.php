@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class TestScore extends Model
 {
     use HasFactory;
+
+    protected $table = 'test_scores';
+
+    protected $guarded = [];
 }

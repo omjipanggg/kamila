@@ -11,7 +11,7 @@ class Religion extends Model
 
     protected $table = 'religions';
 
-    protected $fillable = ['name']; 
+    protected $guarded = [];
 
     function applicant() {
     	return $this->belongsToMany(\App\Models\User::class);
